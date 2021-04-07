@@ -95,7 +95,7 @@ terminal:<br>
 
 ## Questions?
 
-If you have any questions, you can contact me on [Gmail](hz.mouddene@gmail.com).
+If you have any questions, you can contact me on **hz.mouddene@gmail.com**.
 
 ## License
 
