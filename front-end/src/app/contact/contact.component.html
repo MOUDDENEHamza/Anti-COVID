@@ -1,0 +1,64 @@
+<div class="container">
+  <h1>{{ this.title }}</h1>
+  <form [formGroup]="this.contactForm">
+
+    <mat-form-field appearance="fill">
+      <mat-label>First name</mat-label>
+      <label>
+        <input matInput placeholder="Marine" formControlName="firstName" required>
+      </label>
+      <mat-error *ngIf="this.contactForm.get('firstName').invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Last name</mat-label>
+      <label>
+        <input matInput placeholder="Dupont" formControlName="lastName" required>
+      </label>
+      <mat-error *ngIf="this.contactForm.get('lastName').invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="fill" class="largeField">
+      <mat-label>Email</mat-label>
+      <label>
+        <input matInput placeholder="xyz@gmail.com" formControlName="email" required>
+      </label>
+      <mat-error *ngIf="this.contactForm.get('email').invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="fill" class="largeField">
+      <mat-label>Subject</mat-label>
+      <label>
+        <input matInput placeholder="Informations" formControlName="subject" required>
+      </label>
+      <mat-error *ngIf="this.contactForm.get('subject').invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="fill" class="largeField">
+      <mat-label>Content</mat-label>
+      <label>
+        <textarea matInput placeholder="Write your message here..." formControlName="content" required></textarea>
+      </label>
+      <mat-error *ngIf="this.contactForm.get('content').invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+  </form>
+
+  <button mat-raised-button color="primary" [disabled]="enable()" (click)="onSubmit()">
+    <mat-icon aria-hidden="false" aria-label="Example email icon">email</mat-icon>
+    Envoyer
+  </button>
+
+</div>
+
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
