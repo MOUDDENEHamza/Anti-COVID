@@ -1,24 +1,33 @@
 package pack;
 
+import java.util.Collection;
+
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+
 @Singleton
-@Path("/api")
+@Path("/")
 public class Facade {
 
 	@PersistenceContext
 	EntityManager em;
 	
-	@GET
-	@Path("/test")
-    @Produces({ "application/json" })
-	public String test() {
-		return "TEST DONE WITH SUCCESS";
+	/**
+	 * Send an email to administrator from contact page
+	 * @param contact will send the email to administrator
+	 */
+	@POST
+	@Path("/contact")
+    @Consumes({ "application/json" })
+	public void contactAdministrator(String json) {
+		System.out.println(json);
 	}
 	
 }

@@ -34,7 +34,7 @@ command and follow the instructions:<br>
 - Now, **JBoss EAP 7.3.0** is installed, so let's run our **Red Hat JBoss**
 **Enterprise Application Platform** by typing on the terminal:<br>
 ```
-                $ cd ~/EAP7.3.0/bin
+                $ cd ~/EAP-7.3.0/bin
                 $ ./standalone
 ```
 - Open your browser and do **localhost:8080**, you will get something like this:

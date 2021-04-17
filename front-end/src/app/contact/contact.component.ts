@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ContactService } from './contact.service';
 
 @Component({
   selector: 'app-contact',
@@ -11,11 +12,12 @@ export class ContactComponent implements OnInit {
   /** Attributes of component. */
   title = 'Contact';
   contactForm: FormGroup;
+  ContactService: any;
 
   /**
    * Constructor of component.
    */
-  constructor() { }
+  constructor(private contactService: ContactService) { }
 
   /**
    * A lifecycle hook that is called after Angular has initialized all data-bound properties of a directive to
@@ -56,7 +58,11 @@ export class ContactComponent implements OnInit {
   /**
    * Send the form to administrator.
    */
-  onSubmit() {
+  onSubmit() {    
+    this.contactService.sendEmail(this.contactForm.get('firstName').value,
+    this.contactForm.get('lastName').value, this.contactForm.get('email').value,
+    this.contactForm.get('subject').value, this.contactForm.get('content').value).subscribe();
+    this.ngOnInit();
   }
 
 }
