@@ -7,7 +7,7 @@ import {HttpClient, HttpRequest} from '@angular/common/http';
 export class ContactService {
 
   /** Attribute of service. */
-  private baseUrl = 'rest/';
+  private baseUrl = 'http://localhost:8080/rest/';
 
   /**
    * Constructor of service.
@@ -27,7 +27,7 @@ export class ContactService {
     formData.append('subject', subject);
     formData.append('content', content);
 
-    const req = new HttpRequest('POST', `${this.baseUrl}/contacts`, formData, {
+    const req = new HttpRequest('POST', `${this.baseUrl}contacts`, formData, {
       reportProgress: true,
       responseType: 'json'
     });

@@ -24,10 +24,16 @@ public class Facade {
 	 * @param contact will send the email to administrator
 	 */
 	@POST
-	@Path("/contact")
+	@Path("/contacts")
     @Consumes({ "application/json" })
 	public void contactAdministrator(String json) {
 		System.out.println(json);
+	}
+	
+	@GET
+	@Path("/toto")
+	public void test() {
+		System.out.println("test");
 	}
 	
 }

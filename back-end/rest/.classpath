@@ -6,30 +6,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/com/fasterxml/jackson/core/jackson-annotations/main/jackson-annotations-2.10.0.redhat-00002.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-2.0.0.Final-redhat-00001.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_4.0_spec-2.0.0.Final-redhat-00001.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/ws/rs/api/main/jboss-jaxrs-api_2.1_spec-2.0.1.Final-redhat-00001.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/persistence/api/main/jakarta.persistence-api-2.2.3.redhat-00001.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-2.0.0.Final-redhat-00001.jar"/>
+	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/persistence/api/main/jakarta.persistence-api-2.2.3.redhat-00001.jar"/>
+	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_4.0_spec-2.0.0.Final-redhat-00001.jar"/>
+	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/ws/rs/api/main/jboss-jaxrs-api_2.1_spec-2.0.1.Final-redhat-00001.jar"/>
+	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/com/fasterxml/jackson/core/jackson-annotations/main/jackson-annotations-2.10.0.redhat-00002.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
