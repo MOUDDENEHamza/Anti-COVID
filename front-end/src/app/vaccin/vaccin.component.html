@@ -4,9 +4,8 @@
     <form [formGroup]="coordinatesForm">
         <mat-form-field appearance="fill">
             <mat-label>Region</mat-label>
-
             <mat-select formControlName="region" required>
-            <mat-option *ngFor="let region of regionList" [(value)]="region">
+            <mat-option *ngFor="let region of regionList" [value]="region">
                 {{region.name}}
             </mat-option>
             </mat-select>
