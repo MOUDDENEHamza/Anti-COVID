@@ -1,23 +1,26 @@
-<h1>COVID 19 Overview</h1>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<h1>Coming soon ...</h1>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-
+<div class="wrapper">
+    <div class="container">
+        <h1>COVID 19 Overview</h1>
+        <br><br>
+        <mat-card>
+            <h2>new cases in France</h2>
+            <div echarts [options]="new_cases_options" class="demo-chart"></div>
+        </mat-card>
+        <br><br>
+        <mat-card>
+            <h2>Total cases in France</h2>
+            <div echarts [options]="total_cases_options" class="demo-chart"></div>
+        </mat-card>
+        <br><br>
+        <mat-card>
+            <h2>Recovered and new cases in France</h2>
+            <div echarts [options]="this.recovered_new_cases_options" theme="macarons" class="demo-chart"></div>
+        </mat-card>
+        <br><br>
+        <mat-card>
+            <h2>Death in France</h2>
+            <div echarts [options]="death_options" class="demo-chart"></div>
+        </mat-card>
+        <br><br>
+    </div>
+</div>

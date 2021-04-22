@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { NgxEchartsModule } from 'ngx-echarts';
 
+import { MatCardModule} from '@angular/material/card';
+
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 
@@ -13,7 +15,8 @@ import { HomeComponent } from './home.component';
     HomeRoutingModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
-    })
+    }),
+    MatCardModule
   ]
 })
 export class HomeModule { }

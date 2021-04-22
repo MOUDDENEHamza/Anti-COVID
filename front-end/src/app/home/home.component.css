@@ -1,3 +1,14 @@
+.wrapper {
+  background-color: #f5f5f5;
+  padding: 50px
+}
+
+.container {
+  width: 60%;
+  margin: auto;
+  text-align: center;
+}
+
 h1 {
   font-size: 56px;
   font-weight: 300;
@@ -6,3 +17,10 @@ h1 {
   text-align: center;
 }
 
+h2 {
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 28px;
+  margin: 15px 0 25px;
+  text-align: center;
+}
