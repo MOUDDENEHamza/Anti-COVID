@@ -19,6 +19,7 @@ import javax.mail.internet.MimeMessage;
  *
  */
 public class EmailUtility {
+	
     public static void sendEmail(String toAddress, String subject,
     		String message) throws AddressException, MessagingException {
         // sets SMTP server properties

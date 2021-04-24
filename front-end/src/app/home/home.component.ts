@@ -1,5 +1,6 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
   recovered : string[] = [];
   death : string[] = [];
   
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.http.get("assets/owid-covid-data.csv", { responseType: "text" }).subscribe(
       data => {
         let csvToRowArray = data.split("\n");
@@ -39,7 +40,8 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    
     this.new_cases_options = {
       legend: {
         data: ['new cases'],
@@ -165,8 +167,11 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  ngOnChanges(): void {
-    this.ngOnInit();
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 
 }
