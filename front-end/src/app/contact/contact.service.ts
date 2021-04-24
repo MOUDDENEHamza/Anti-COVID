@@ -1,5 +1,23 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpRequest} from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
+
+export class contact {
+  
+  firstName: string;
+  lastName: string;
+  email: string;
+  subject: string;
+  content: string;
+
+  constructor(firstName: string, lastName: string, email: string, subject: string, content: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.subject = subject;
+    this.content = content;
+  }
+
+}
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +25,7 @@ import {HttpClient, HttpRequest} from '@angular/common/http';
 export class ContactService {
 
   /** Attribute of service. */
-  private baseUrl = 'http://localhost:8080/rest/rest/';
+  private baseURL = 'http://localhost:8080/rest/rest/';
 
   /**
    * Constructor of service.
@@ -20,19 +38,10 @@ export class ContactService {
    * Send the form contact to administrator.
    */
   public sendEmail(firstName: string, lastName: string, email: string, subject: string, content: string) {
-    const formData: FormData = new FormData();
-    formData.append('firstName', firstName);
-    formData.append('lastName', lastName);
-    formData.append('email', email);
-    formData.append('subject', subject);
-    formData.append('content', content);
-
-    const req = new HttpRequest('POST', `${this.baseUrl}contacts`, formData, {
-      reportProgress: true,
-      responseType: 'json'
-    });
-
-    return this.http.request(req);
+    const headers = {'content-type': 'application/json'}  
+    const body=JSON.stringify(new contact(firstName, lastName, email, subject, content));
+    console.log(body)
+    return this.http.post(this.baseURL + 'contact', body ,{'headers': headers})
   }
 
 }
