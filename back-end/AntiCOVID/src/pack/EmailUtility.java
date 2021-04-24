@@ -46,9 +46,8 @@ public class EmailUtility {
         msg.setSubject(subject);
         msg.setSentDate(new Date());
         msg.setText(message);
- 
+        
         // sends the e-mail
         Transport.send(msg);
- 
     }
 }

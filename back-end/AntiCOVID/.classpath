@@ -31,7 +31,15 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/mail/api/main/jakarta.mail-1.6.4.redhat-00001.jar"/>
-	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/annotation/api/main/jboss-annotations-api_1.3_spec-2.0.1.Final-redhat-00001.jar"/>
+	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/mail/api/main/jakarta.mail-1.6.4.redhat-00001.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/hamza/EAP-7.3.0/modules/system/layers/base/javax/annotation/api/main/jboss-annotations-api_1.3_spec-2.0.1.Final-redhat-00001.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

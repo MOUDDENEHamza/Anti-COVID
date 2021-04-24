@@ -1,39 +1,33 @@
-<div>
-    <h1>Vaccin</h1>
-    <br><br>
-    <form [formGroup]="coordinatesForm">
-        <mat-form-field appearance="fill">
-            <mat-label>Region</mat-label>
-            <mat-select formControlName="region" required>
-            <mat-option *ngFor="let region of regionList" [value]="region">
-                {{region.name}}
-            </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="fill">
-            <mat-label>Department</mat-label>
+<div class="wrapper">
+    <mat-card class="container">
+        <h1>Vaccin</h1>
+        <br><br>
+        <form [formGroup]="coordinatesForm">
+            <mat-form-field appearance="fill">
+                <mat-label>Region</mat-label>
+                <mat-select formControlName="region" required>
+                <mat-option *ngFor="let region of regionList" [value]="region">
+                    {{region.name}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Department</mat-label>
 
-            <mat-select formControlName="department" required>
-            <mat-option *ngFor="let department of this.coordinatesForm.get('region').value.departments" [value]="department">
-                {{department}}
-            </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <br>
-    </form>
-    <br><br>
-    <button mat-raised-button color="primary" [disabled]="this.coordinatesForm.invalid">
-        <mat-icon aria-hidden="false" aria-label="Example search icon">search</mat-icon>
-        Search
-    </button>
-    <br><br>
+                <mat-select formControlName="department" required>
+                <mat-option *ngFor="let department of this.coordinatesForm.get('region').value.departments" [value]="department">
+                    {{department}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+        </form>
+        <br><br>
+        <button mat-raised-button color="primary" [disabled]="this.coordinatesForm.invalid">
+            <mat-icon aria-hidden="false" aria-label="Example search icon">search</mat-icon>
+            Search
+        </button>
+        <br><br>
+    </mat-card>
 </div>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>

@@ -7,7 +7,8 @@ import javax.persistence.Id;
 
 @Entity
 public class Contact {
-
+	
+	/** Attributes of contact */
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)  
 	private int id;

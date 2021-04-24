@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   new_cases : string[] = [];
   recovered : string[] = [];
   death : string[] = [];
-
+  
   constructor(private http: HttpClient) {
     this.http.get("assets/owid-covid-data.csv", { responseType: "text" }).subscribe(
       data => {
