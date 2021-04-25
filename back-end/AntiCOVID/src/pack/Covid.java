@@ -1,7 +1,5 @@
 package pack;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,55 +11,63 @@ public class Covid {
 	/** Attributes of contact */
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)  
-	private int id;
+	private Long id;
 	
-	private Date date;
+	private String date;
 	
-	private int newCases;
+	private String newCases;
 
-	private int totalCases;
+	private String totalCases;
 	
-	private int recovered;
+	private String recovered;
 	
-	private int death;
+	private String death;
 	
-	public Date getDate() {
+	public Long getId() {
+		return this.id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public String getDate() {
 		return date;
 	}
 	
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	
-	public int getNewCases() {
+	public String getNewCases() {
 		return newCases;
 	}
 	
-	public void setNewCases(int newCases) {
+	public void setNewCases(String newCases) {
 		this.newCases = newCases;
 	}
 	
-	public int getTotalCases() {
+	public String getTotalCases() {
 		return totalCases;
 	}
 	
-	public void setTotalCases(int totalCases) {
+	public void setTotalCases(String totalCases) {
 		this.totalCases = totalCases;
 	}
 	
-	public int getRecovered() {
+	public String getRecovered() {
 		return recovered;
 	}
 	
-	public void setRecovered(int recovered) {
+	public void setRecovered(String recovered) {
 		this.recovered = recovered;
 	}
 	
-	public int getDeath() {
+	public String getDeath() {
 		return death;
 	}
 	
-	public void setDeath(int death) {
+	public void setDeath(String death) {
 		this.death = death;
 	}
 	
