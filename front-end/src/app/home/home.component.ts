@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   new_cases_options: any;
+  dates : string[] = [];
+  new_cases : string[] = [];
   total_cases_options: any;
   recovered_new_cases_options: any;
   death_options: any;
-  dates : string[] = [];
   total_cases : string[] = [];
-  new_cases : string[] = [];
   recovered : string[] = [];
   death : string[] = [];
   
@@ -41,7 +41,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.new_cases_options = {
       legend: {
         data: ['new cases'],
@@ -67,6 +66,7 @@ export class HomeComponent implements OnInit {
       animationEasing: 'elasticOut',
       animationDelayUpdate: (idx) => idx * 2,
     };
+  
     this.total_cases_options = {
       legend: {
         data: ['total cases'],
