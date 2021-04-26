@@ -3,6 +3,8 @@ package pack;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +24,7 @@ public class Facade {
 
 	@PersistenceContext
 	EntityManager em;
-    
+	
     /**
      * Generate unique ID from UUID
      * @return long value representing UUID
@@ -42,39 +44,42 @@ public class Facade {
     }
     
 	/**
-	 * Update the database with the current data
+	 * Update the database with the current data of new cases
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
 	@POST
-	@Path("/covid_overview")
-	public void updateCovidOverview() throws IOException, InterruptedException {
+	@Path("/new_cases")
+	public void updateNewCases() throws IOException, InterruptedException {
 		try {
+			MultiSeries multiSeries = new MultiSeries();
+			multiSeries.setId(generateUniqueId());
+			multiSeries.setName("New_cases");
+			ArrayList<Series> series = new ArrayList<>();
 			List<List<String>> records = CSVUtility.parseCSVFile();
 			for (int i = 0; i < records.size(); i++) {
-				Covid covid = new Covid();
-				covid.setId(generateUniqueId());
-				covid.setDate(records.get(i).get(0));
-				covid.setTotalCases(records.get(i).get(1));
-				covid.setNewCases(records.get(i).get(2));
-				covid.setRecovered(records.get(i).get(3));
-				covid.setDeath(records.get(i).get(4));
-				em.merge(covid);
+				Series item = new Series();
+				item.setId(generateUniqueId());
+				item.setName(records.get(i).get(0));
+				item.setValue(Float.valueOf(records.get(i).get(2)).intValue());
+				series.add(item);
 			}
-		} catch (IOException e) {
+			multiSeries.setSeries(series);
+			em.persist(multiSeries);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * Get all Covid data
+	 * Get new cases data
 	 * @return a collection of Covid entity
 	 */
 	@GET
-	@Path("/covid_overview")
+	@Path("/new_cases")
 	@Produces({"application/json"})
-	public Collection<Covid> getCovidOverview() {
-		return em.createQuery("from Covid", Covid.class).getResultList();
+	public Collection<MultiSeries> getNewCases() {
+		return em.createQuery("from MultiSeries", MultiSeries.class).getResultList();
 	}
 	
 	/**

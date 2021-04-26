@@ -38,6 +38,13 @@ export class GetDataService {
    * Get all covid data from database
    */
   public getdata() {
-    console.log(this.http.get(this.baseURL + 'covid_overview'));
+    this.http.get(this.baseURL + 'covid_overview', { responseType: "json" }).subscribe(
+      data => {
+        console.log(data)
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

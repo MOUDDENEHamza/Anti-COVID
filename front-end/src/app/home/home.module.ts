@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NgxEchartsModule } from 'ngx-echarts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { MatCardModule} from '@angular/material/card';
 
@@ -19,6 +20,7 @@ import { DeathComponent } from './death/death.component';
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     }),
+    NgxChartsModule,
     MatCardModule
   ]
 })

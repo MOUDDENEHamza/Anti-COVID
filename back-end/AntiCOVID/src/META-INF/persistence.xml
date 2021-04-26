@@ -9,7 +9,8 @@
         <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
         
         <class>pack.Contact</class>
-        <class>pack.Covid</class>
+        <class>pack.MultiSeries</class>
+        <class>pack.Series</class>
         
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
