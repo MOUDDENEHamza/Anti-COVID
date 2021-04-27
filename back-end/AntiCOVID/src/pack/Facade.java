@@ -3,7 +3,6 @@ package pack;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -53,17 +52,17 @@ public class Facade {
 	public void updateNewCases() throws IOException, InterruptedException {
 		try {
 			MultiSeries multiSeries = new MultiSeries();
-			multiSeries.setId(generateUniqueId());
 			multiSeries.setName("New_cases");
 			ArrayList<Series> series = new ArrayList<>();
 			List<List<String>> records = CSVUtility.parseCSVFile();
 			for (int i = 0; i < records.size(); i++) {
 				Series item = new Series();
-				item.setId(generateUniqueId());
 				item.setName(records.get(i).get(0));
 				item.setValue(Float.valueOf(records.get(i).get(2)).intValue());
+				item.setChart(multiSeries);
 				series.add(item);
 			}
+			System.out.println("size = " + series.size());
 			multiSeries.setSeries(series);
 			em.persist(multiSeries);
 		} catch (Exception e) {

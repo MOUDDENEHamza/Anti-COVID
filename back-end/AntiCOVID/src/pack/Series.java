@@ -1,9 +1,11 @@
 package pack;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Series {
@@ -17,6 +19,9 @@ public class Series {
 	
 	private int value;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	MultiSeries chart;
+
 	public Long getId() {
 		return this.id;
 	}
@@ -39,5 +44,13 @@ public class Series {
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+	
+	public MultiSeries getChart() {
+		return chart;
+	}
+
+	public void setChart(MultiSeries chart) {
+		this.chart = chart;
 	}
 }

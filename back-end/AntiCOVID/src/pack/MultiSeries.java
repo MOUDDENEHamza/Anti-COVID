@@ -2,6 +2,7 @@ package pack;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class MultiSeries {
 	
 	private String name;
 	
-	@OneToMany
+	@OneToMany(mappedBy="chart", cascade = CascadeType.ALL)
 	private Collection<Series> series;
 	
 	public Long getId() {
