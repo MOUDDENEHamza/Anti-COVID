@@ -1,7 +1,7 @@
 <mat-card>
     <h2>Total cases in France</h2>
     
-    <ngx-charts-line-chart
+    <ngx-charts-area-chart
       [view]="view"
       [scheme]="colorScheme"
       [legend]="legend"
@@ -16,6 +16,6 @@
       (select)="onSelect($event)"
       (activate)="onActivate($event)"
       (deactivate)="onDeactivate($event)">
-    </ngx-charts-line-chart>
+    </ngx-charts-area-chart>
   
   </mat-card>

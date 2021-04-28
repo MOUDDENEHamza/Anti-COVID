@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-recovered-new-cases',
-  templateUrl: './recovered-new-cases.component.html',
-  styleUrls: ['./recovered-new-cases.component.css']
+  selector: 'app-recovered',
+  templateUrl: './recovered.component.html',
+  styleUrls: ['./recovered.component.css']
 })
-export class RecoveredNewCasesComponent implements OnInit {
+export class RecoveredComponent implements OnInit {
 
   data: any[];
   view: any[] = [1000, 400];
@@ -19,16 +19,16 @@ export class RecoveredNewCasesComponent implements OnInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Year';
-  yAxisLabel: string = 'Population';
+  xAxisLabel: string = '';
+  yAxisLabel: string = '';
   timeline: boolean = true;
 
   colorScheme = {
-    domain: ['#7aa3e5']
+    domain: ['#006400']
   };
 
   constructor(private http: HttpClient) {
-    this.http.get('http://localhost:8080/AntiCOVID/rest/recovered_new_cases', { responseType: "json" }).subscribe(
+    this.http.get('http://localhost:8080/AntiCOVID/rest/death', { responseType: "json" }).subscribe(
       data => {
         Object.assign(this, { data });
       },
@@ -53,4 +53,5 @@ export class RecoveredNewCasesComponent implements OnInit {
   onDeactivate(data): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
+
 }

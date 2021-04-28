@@ -21,11 +21,11 @@ public class CSVUtility {
 		        List<String> item = new ArrayList<>();
 		        
 		        if ((values[2]).equals("France")) {
-		        	item.add(values[3]);
-		        	item.add(values[4]);
-		        	item.add(values[5]);
-		        	item.add(values[6]);
-		        	item.add(values[8]);
+		        	item.add(values[3]); // date        0
+		        	item.add(values[4]); // total_cases 1
+		        	item.add(values[5]); // new_cases   2
+		        	item.add(values[6]); // recovered   3
+		        	item.add(values[8]); // death       4
 		        	records.add(item);
 		        }
 		    }

@@ -19,12 +19,12 @@ export class TotalCasesComponent implements OnInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Year';
-  yAxisLabel: string = 'Population';
+  xAxisLabel: string = '';
+  yAxisLabel: string = '';
   timeline: boolean = true;
 
   colorScheme = {
-    domain: ['#7aa3e5']
+    domain: ['#FF0000']
   };
 
   constructor(private http: HttpClient) {

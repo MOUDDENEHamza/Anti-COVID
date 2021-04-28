@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecoveredNewCasesComponent } from './recovered-new-cases.component';
+import { RecoveredComponent } from './recovered.component';
 
-describe('RecoveredNewCasesComponent', () => {
-  let component: RecoveredNewCasesComponent;
-  let fixture: ComponentFixture<RecoveredNewCasesComponent>;
+describe('RecoveredComponent', () => {
+  let component: RecoveredComponent;
+  let fixture: ComponentFixture<RecoveredComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecoveredNewCasesComponent ]
+      declarations: [ RecoveredComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecoveredNewCasesComponent);
+    fixture = TestBed.createComponent(RecoveredComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
