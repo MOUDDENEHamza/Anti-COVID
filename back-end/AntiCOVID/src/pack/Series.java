@@ -1,25 +1,28 @@
 package pack;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Series {
 	
 	/** Attributes of contact */
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)  
+    @GeneratedValue(strategy = GenerationType.AUTO)  
+	@JsonIgnore
 	private Long id;
 	
 	private String name;
 	
 	private int value;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JsonIgnore
 	MultiSeries chart;
 
 	public Long getId() {
@@ -52,5 +55,9 @@ public class Series {
 
 	public void setChart(MultiSeries chart) {
 		this.chart = chart;
+	}
+	
+	public String toString() {
+		return "name : " + this.getName() + ", value : " + this.getValue() +"\n";
 	}
 }

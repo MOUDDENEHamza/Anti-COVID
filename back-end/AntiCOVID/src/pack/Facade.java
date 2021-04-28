@@ -62,7 +62,6 @@ public class Facade {
 				item.setChart(multiSeries);
 				series.add(item);
 			}
-			System.out.println("size = " + series.size());
 			multiSeries.setSeries(series);
 			em.persist(multiSeries);
 		} catch (Exception e) {

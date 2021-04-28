@@ -1,59 +1,5 @@
-import { Component, NgModule, OnInit } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { GetDataService } from '../get-data.service';
-
-export var multi = [
-  {
-    "name": "Germany",
-    "series": [
-      {
-        "name": "1990",
-        "value": 62000000
-      },
-      {
-        "name": "1991",
-        "value": 73000000
-      },
-      {
-        "name": "1992",
-        "value": 89400000
-      },
-      {
-        "name": "1993",
-        "value": 250000000
-      },
-      {
-        "name": "1994",
-        "value": 309000000
-      },
-      {
-        "name": "1995",
-        "value": 311000000
-      },
-      {
-        "name": "1996",
-        "value": 58000000
-      },
-      {
-        "name": "1997",
-        "value": 50000020
-      },
-      {
-        "name": "1998",
-        "value": 58000000
-      },
-      {
-        "name": "1999",
-        "value": 57000000
-      },
-      {
-        "name": "2000",
-        "value": 62000000
-      }
-    ]
-  }
-];
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-new-cases',
@@ -62,7 +8,7 @@ export var multi = [
 })
 export class NewCasesComponent implements OnInit {
   
-  multi: any[];
+  data: any[];
   view: any[] = [1000, 400];
 
   // options
@@ -81,8 +27,16 @@ export class NewCasesComponent implements OnInit {
     domain: ['#7aa3e5']
   };
 
-  constructor(private getData: GetDataService) {
-    Object.assign(this, { multi });
+  constructor(private http: HttpClient) {
+    this.http.get('http://localhost:8080/AntiCOVID/rest/new_cases', { responseType: "json" }).subscribe(
+      data => {
+        Object.assign(this, { data });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    
   }
 
   ngOnInit(): void {

@@ -40,7 +40,7 @@ export class GetDataService {
   public getdata() {
     this.http.get(this.baseURL + 'covid_overview', { responseType: "json" }).subscribe(
       data => {
-        console.log(data)
+        return data;
       },
       error => {
         console.log(error);

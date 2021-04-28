@@ -8,16 +8,19 @@
             <div echarts [options]="new_cases_options" class="demo-chart"></div>
         </mat-card>
         <br><br>
+        <app-total-cases></app-total-cases>
         <mat-card>
             <h2>Total cases in France</h2>
             <div echarts [options]="total_cases_options" class="demo-chart"></div>
         </mat-card>
         <br><br>
+        <app-recovered-new-cases></app-recovered-new-cases>
         <mat-card>
             <h2>Recovered and new cases in France</h2>
             <div echarts [options]="this.recovered_new_cases_options" theme="macarons" class="demo-chart"></div>
         </mat-card>
         <br><br>
+        <app-death></app-death>
         <mat-card>
             <h2>Death in France</h2>
             <div echarts [options]="death_options" class="demo-chart"></div>
