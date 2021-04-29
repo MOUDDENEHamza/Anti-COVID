@@ -56,7 +56,7 @@ public class Facade {
 			MultiSeries multiSeries = new MultiSeries();
 			multiSeries.setName("New_cases");
 			ArrayList<Series> series = new ArrayList<>();
-			List<List<String>> records = CSVUtility.parseCSVFile();
+			List<List<String>> records = CSVUtility.parseCSVCovidFile();
 			for (int i = 0; i < records.size(); i++) {
 				Series item = new Series();
 				item.setName(records.get(i).get(0));
@@ -95,7 +95,7 @@ public class Facade {
 			MultiSeries multiSeries = new MultiSeries();
 			multiSeries.setName("Total_cases");
 			ArrayList<Series> series = new ArrayList<>();
-			List<List<String>> records = CSVUtility.parseCSVFile();
+			List<List<String>> records = CSVUtility.parseCSVCovidFile();
 			for (int i = 0; i < records.size(); i++) {
 				Series item = new Series();
 				item.setName(records.get(i).get(0));
@@ -134,7 +134,7 @@ public class Facade {
 			MultiSeries multiSeries = new MultiSeries();
 			multiSeries.setName("Recovered");
 			ArrayList<Series> series = new ArrayList<>();
-			List<List<String>> records = CSVUtility.parseCSVFile();
+			List<List<String>> records = CSVUtility.parseCSVCovidFile();
 			for (int i = 0; i < records.size(); i++) {
 				Series item = new Series();
 				item.setName(records.get(i).get(0));
@@ -177,7 +177,7 @@ public class Facade {
 			MultiSeries multiSeries = new MultiSeries();
 			multiSeries.setName("Death");
 			ArrayList<Series> series = new ArrayList<>();
-			List<List<String>> records = CSVUtility.parseCSVFile();
+			List<List<String>> records = CSVUtility.parseCSVCovidFile();
 			for (int i = 0; i < records.size(); i++) {
 				Series item = new Series();
 				item.setName(records.get(i).get(0));

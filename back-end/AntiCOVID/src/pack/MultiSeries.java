@@ -21,7 +21,7 @@ public class MultiSeries implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/** Attributes of contact */
+	/** Attributes of multiSeries */
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	@JsonIgnore

@@ -11,7 +11,7 @@ public class CSVUtility {
 	 * @throws CsvException 
 	 * @throws IOException 
 	 */
-	public static List<List<String>> parseCSVFile() throws FileNotFoundException, IOException {
+	public static List<List<String>> parseCSVCovidFile() throws FileNotFoundException, IOException {
 		String fileName = "/home/hamza/Desktop/Anti-COVID/back-end/AntiCOVID/data/owid-covid-data.csv";
 		List<List<String>> records = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -30,6 +30,18 @@ public class CSVUtility {
 		        }
 		    }
 		}
+		return records;
+	}
+	
+	/**
+	 * Parse a CSV file and extract vaccin center data stored on centres-vaccination.csv
+	 * @throws FileNotFoundException 
+	 * @throws CsvException 
+	 * @throws IOException 
+	 */
+	public static List<List<String>> parseCSVVaccinFile() throws FileNotFoundException, IOException {
+		String fileName = "/home/hamza/Desktop/Anti-COVID/back-end/AntiCOVID/data/centres-vaccination.csv";
+		List<List<String>> records = new ArrayList<>();
 		return records;
 	}
 
