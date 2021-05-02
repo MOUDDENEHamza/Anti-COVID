@@ -2,13 +2,13 @@ package pack;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class VaccinationCenter implements Serializable {
@@ -18,15 +18,18 @@ public class VaccinationCenter implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/** Attributes of vaccination center */
+	/** Attributes of VaccinationCenter center */
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	private String name;
 	
-	@OneToOne
+	@OneToOne(mappedBy = "vaccinationCenter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Address address;
+	
+	@OneToOne(mappedBy = "vaccinationCenter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Appointment appointment;
 
 	public Long getId() {
 		return id;
@@ -52,9 +55,12 @@ public class VaccinationCenter implements Serializable {
 		this.address = address;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Appointment getAppointment() {
+		return appointment;
 	}
 
-	
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
+
 }

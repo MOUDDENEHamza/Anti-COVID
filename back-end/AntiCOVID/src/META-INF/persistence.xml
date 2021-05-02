@@ -11,6 +11,9 @@
         <class>pack.Contact</class>
         <class>pack.MultiSeries</class>
         <class>pack.Series</class>
+        <class>pack.VaccinationCenter</class>
+        <class>pack.Address</class>
+        <class>pack.Appointment</class>
         
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />

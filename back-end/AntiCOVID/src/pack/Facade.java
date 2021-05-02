@@ -20,7 +20,7 @@ import javax.ws.rs.Produces;
 @Singleton
 @Path("/")
 public class Facade {
-
+	
 	@PersistenceContext
 	EntityManager em;
 	
@@ -206,6 +206,58 @@ public class Facade {
 	public Collection<MultiSeries> getDeath() {
 		return em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
 				.setParameter("name", "Death").getResultList();
+	}
+	
+	/*************************************************************************/
+	
+	/**
+	 * Update the database with the current data of vaccination center
+	 */
+	@POST
+	@Path("/vaccinationCenter")
+	public void updateVaccin() {
+		try {
+			VaccinationCenter vc = new VaccinationCenter();
+			List<List<String>> records = CSVUtility.parseCSVVaccinFile();
+			for (int i = 0; i < records.size(); i++) {
+				vc.setName(records.get(i).get(0));
+				Address a = new Address();
+				if (records.get(i).get(1).length() > 0 ) {
+					a.setNumber(records.get(i).get(1));
+				} else {
+					a.setNumber("");
+				}
+				a.setStreet(records.get(i).get(2));
+				if (records.get(i).get(3).length() > 0) {
+					a.setZipCode(records.get(i).get(3));	
+				} else {
+					a.setZipCode("");
+				}
+				a.setCity(records.get(i).get(4));
+				a.setRegion(records.get(i).get(5));
+				a.setVaccinationCenter(vc);
+				vc.setAddress(a);
+				Appointment rdv = new Appointment();
+				rdv.setWebSite(records.get(i).get(6));
+				rdv.setPhoneNumber(records.get(i).get(7));
+				rdv.setVaccinationCenter(vc);
+				vc.setAppointment(rdv);
+				em.persist(vc);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Get vaccinationCenters data
+	 * @return a collection of VaccinationCenter
+	 */
+	@GET
+	@Path("/vaccinationCenter")
+	@Produces({"application/json"})
+	public Collection<VaccinationCenter> getVaccin() {
+		return em.createQuery("FROM VaccinationCenter", VaccinationCenter.class).getResultList();
 	}
 	
 	/*************************************************************************/
