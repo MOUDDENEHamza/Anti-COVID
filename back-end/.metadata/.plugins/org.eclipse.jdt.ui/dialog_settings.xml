@@ -13,4 +13,10 @@
 	</section>
 	<section name="JavaElementSearchActions">
 	</section>
+	<section name="BuildPathsPropertyPage">
+		<item key="pageIndex" value="2"/>
+	</section>
+	<section name="OptionalMessageDialog.hide.">
+		<item key="configure_problem_severity_dialog_id" value="false"/>
+	</section>
 </section>

@@ -212,10 +212,10 @@ public class Facade {
 	
 	/**
 	 * Update the database with the current data of vaccination center
-	 */
+	 
 	@POST
-	@Path("/vaccinationCenter")
-	public void updateVaccin() {
+	@Path("/vaccination_center")
+	public void updateVaccinationCenter() {
 		try {
 			VaccinationCenter vc = new VaccinationCenter();
 			List<List<String>> records = CSVUtility.parseCSVVaccinFile();
@@ -252,14 +252,14 @@ public class Facade {
 	/**
 	 * Get vaccinationCenters data
 	 * @return a collection of VaccinationCenter
-	 */
+	 
 	@GET
-	@Path("/vaccinationCenter")
+	@Path("/vaccination_center")
 	@Produces({"application/json"})
-	public Collection<VaccinationCenter> getVaccin() {
+	public Collection<VaccinationCenter> getVaccinationCenter() {
 		return em.createQuery("FROM VaccinationCenter", VaccinationCenter.class).getResultList();
 	}
-	
+	*/
 	/*************************************************************************/
 	
 	/**
