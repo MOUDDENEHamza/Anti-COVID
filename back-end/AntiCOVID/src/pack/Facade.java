@@ -214,7 +214,7 @@ public class Facade {
 	 * Update the database with the current data of vaccination center
 	 */
 	@POST
-	@Path("/vaccinationCenter")
+	@Path("/vaccination_center")
 	public void updateVaccin() {
 		try {
 			VaccinationCenter vc = new VaccinationCenter();
@@ -254,7 +254,7 @@ public class Facade {
 	 * @return a collection of VaccinationCenter
 	 */
 	@GET
-	@Path("/vaccinationCenter")
+	@Path("/vaccination_center")
 	@Produces({"application/json"})
 	public Collection<VaccinationCenter> getVaccin() {
 		return em.createQuery("FROM VaccinationCenter", VaccinationCenter.class).getResultList();
