@@ -217,9 +217,9 @@ public class Facade {
 	@Path("/vaccination_center")
 	public void updateVaccin() {
 		try {
-			VaccinationCenter vc = new VaccinationCenter();
 			List<List<String>> records = CSVUtility.parseCSVVaccinFile();
 			for (int i = 0; i < records.size(); i++) {
+				VaccinationCenter vc = new VaccinationCenter();
 				vc.setName(records.get(i).get(0));
 				Address a = new Address();
 				if (records.get(i).get(1).length() > 0 ) {
