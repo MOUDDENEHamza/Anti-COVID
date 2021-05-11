@@ -1,5 +1,6 @@
 <div class="wrapper">
-    <mat-card class="container">
+
+    <mat-card class="container" *ngIf="this.hideForm()">
         <h1>Vaccin</h1>
         <br><br>
         <form [formGroup]="coordinatesForm">
@@ -24,10 +25,43 @@
             <br>
         </form>
         <br><br>
-        <button mat-raised-button color="primary" [disabled]="this.coordinatesForm.invalid" onclick="this.onSubmit()">
+        <button mat-raised-button color="primary" [disabled]="this.coordinatesForm.invalid" (click)="this.onSubmit()">
             <mat-icon aria-hidden="false" aria-label="Example search icon">search</mat-icon>
             Search
         </button>
         <br><br>
     </mat-card>
+    
+    <ul *ngIf="!this.hideForm()">    
+        <li *ngFor="let item of this.informations">
+            <mat-card class="center">      
+                <mat-card-content>
+                    <h2>{{ item.name }}</h2>
+                    <mat-divider></mat-divider>
+                    <br>
+                    <mat-icon aria-hidden="false" aria-label="Example place icon">place</mat-icon>
+                    <br>
+                    <div *ngIf="item.address.number !== '' && item.address.street !== ''">
+                        {{ item.address.number }} {{ item.address.street }}<br>
+                    </div>
+                    {{ item.address.zipCode }} {{ item.address.city }}<br>
+                    {{ item.address.region }}
+                    <div *ngIf="item.appointment.phoneNumber !== ''">
+                        <br>
+                        <mat-icon aria-hidden="false" aria-label="Example phone icon">phone</mat-icon>
+                        <br>
+                        {{ item.appointment.phoneNumber }}
+                    </div>
+                </mat-card-content>
+        
+                <mat-card-actions>
+                    <a mat-raised-button href="{{ item.appointment.webSite }}" target="_blank" color="accent">
+                        <mat-icon aria-hidden="false" aria-label="Example schedule icon">schedule</mat-icon>
+                        Make an appointement
+                    </a>
+                </mat-card-actions>
+            </mat-card>        
+        </li>    
+    </ul>
+
 </div>

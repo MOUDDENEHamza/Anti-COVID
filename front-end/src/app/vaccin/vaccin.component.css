@@ -1,5 +1,4 @@
 .wrapper {
-  height: 100%;
   padding: 50px;
   background-color: #f5f5f5;
   text-align: center;
@@ -20,4 +19,25 @@ h1 {
 
 mat-form-field, button {
   width: 30%;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  margin: 20px;
+}
+
+.center {
+  width: 40%;
+  text-align: left;
+  margin: auto;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 28px;
+  margin: 15px 0 25px;
 }
