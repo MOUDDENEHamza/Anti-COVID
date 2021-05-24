@@ -9,6 +9,8 @@ import { REGIONS } from './region-list';
   styleUrls: ['./vaccin.component.css']
 })
 export class VaccinComponent implements OnInit {
+
+  title = 'Vaccin';
   informations: any = [];
   coordinatesForm: FormGroup;
   regionList = REGIONS;

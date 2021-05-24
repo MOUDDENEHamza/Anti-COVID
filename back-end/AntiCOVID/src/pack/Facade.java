@@ -10,12 +10,15 @@ import java.util.UUID;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 @Singleton
 @Path("/")
@@ -258,6 +261,39 @@ public class Facade {
 	@Produces({"application/json"})
 	public Collection<VaccinationCenter> getVaccin() {
 		return em.createQuery("FROM VaccinationCenter", VaccinationCenter.class).getResultList();
+	}
+	
+	/*************************************************************************/
+	
+	@GET
+	@Path("/get_users_list")
+	@Produces({"application/json"})
+	public Collection<User> getUsersList() {
+		return em.createQuery("FROM User", User.class).getResultList();
+	}
+	
+	@GET
+	@Path("/get_user_by_email")
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({"application/json"})
+	public User getUserByEmail(String email) {
+		User user = null;
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email")
+		.setParameter("email", email);
+		try {
+			user = (User) query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println("This user does not exist.");
+			return null;
+		}
+		return user;	
+	}
+	
+	@POST
+	@Path("/add_user")
+	@Consumes({"application/json"})
+	public void addUser(User user) {
+		em.persist(user);
 	}
 	
 	/*************************************************************************/

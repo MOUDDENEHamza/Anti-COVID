@@ -6,3 +6,9 @@
 a {
   color: black;
 }
+
+.right {
+  padding-right: 20px;
+  position:absolute;
+  right:0;
+}
