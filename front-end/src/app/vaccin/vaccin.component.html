@@ -1,4 +1,11 @@
-<div class="wrapper">
+<div class="splash-screen" *ngIf="!this.hideContent()">
+    Loading
+    <span class="d">.</span>
+    <span class="d d-2">.</span>
+    <span class="d d-3">.</span>
+</div>
+
+<div class="wrapper" *ngIf="this.hideContent()">
 
     <h1>{{ this.title }}</h1>
     

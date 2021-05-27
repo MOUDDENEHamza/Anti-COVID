@@ -14,8 +14,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -262,7 +264,48 @@ public class Facade {
 	public Collection<VaccinationCenter> getVaccin() {
 		return em.createQuery("FROM VaccinationCenter", VaccinationCenter.class).getResultList();
 	}
+	/*************************************************************************/
 	
+	/*************************************************************************/
+	/*									FORUM								 */
+	/*************************************************************************/
+	@GET
+	@Path("/get_posts_list")
+	@Produces({"application/json"})
+	public Collection<Post> getPostsList() {
+		return em.createQuery("FROM Post", Post.class).getResultList();
+	}
+	
+	@POST
+	@Path("/add_post")
+	@Consumes({"application/json"})
+	public void addPost(Post post) {
+		em.persist(post);
+	}
+	
+	@PUT
+	@Path("/add_comment")
+	@Consumes({"application/json"})
+	public void addComment(Comment comment) {
+		Post post = em.find(Post.class, comment.getPost().getId());
+		if (post == null) {
+			System.out.println("ko");
+		} else {
+			Collection<Comment> tmp = post.getComments();
+			tmp.add(comment);
+			post.setComments(tmp);
+			em.merge(post);
+		}
+	}
+	
+	@DELETE
+	@Path("/delete_posts_list")
+	public void deletePostsList() {
+		Collection<Post> l = em.createQuery("FROM Post", Post.class).getResultList();
+		for (Post p : l) {
+			em.remove(p);
+		}
+	}
 	/*************************************************************************/
 	
 	@GET
@@ -296,6 +339,11 @@ public class Facade {
 		em.persist(user);
 	}
 	
+	@DELETE
+	@Path("/delete_users_list")
+	public void deleteUsersList() {
+		em.createQuery("DELETE FROM User");
+	}
 	/*************************************************************************/
 	
 	/**

@@ -11,6 +11,7 @@ import { REGIONS } from './region-list';
 export class VaccinComponent implements OnInit {
 
   title = 'Vaccin';
+  downloadDone = false;
   informations: any = [];
   coordinatesForm: FormGroup;
   regionList = REGIONS;
@@ -35,6 +36,13 @@ export class VaccinComponent implements OnInit {
     this.coordinatesForm.get('region').valueChanges.subscribe(region => {
       this.coordinatesForm.get('department').enable()
    })
+  }
+
+  hideContent() : boolean {
+    if (this.informations.length === 4456) {
+      this.downloadDone = true;
+    }
+    return this.downloadDone;
   }
 
   hideForm(): boolean {
