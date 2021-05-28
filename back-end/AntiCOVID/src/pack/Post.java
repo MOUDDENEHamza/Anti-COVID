@@ -32,7 +32,7 @@ public class Post implements Serializable {
 	
 	private String content;
 	
-	@OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<Comment> comments;
 
 	public int getId() {

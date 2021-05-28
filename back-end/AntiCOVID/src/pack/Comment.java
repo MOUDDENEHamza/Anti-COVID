@@ -6,9 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Comment implements Serializable {
@@ -28,9 +25,6 @@ public class Comment implements Serializable {
 	private String date;
 	
 	private String content;
-	
-	@ManyToOne
-	private Post post;
 	
 	public int getId() {
 		return id;
@@ -62,14 +56,6 @@ public class Comment implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public Post getPost() {
-		return post;
-	}
-
-	public void setPost(Post post) {
-		this.post = post;
 	}
 	
 }

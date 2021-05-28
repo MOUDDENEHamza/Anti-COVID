@@ -19,6 +19,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -284,16 +285,15 @@ public class Facade {
 	}
 	
 	@PUT
-	@Path("/add_comment")
+	@Path("/post_id={id}/add_comment")
 	@Consumes({"application/json"})
-	public void addComment(Comment comment) {
-		Post post = em.find(Post.class, comment.getPost().getId());
-		if (post == null) {
-			System.out.println("ko");
+	public void addComment(@PathParam("id") String id, Comment comment) {
+		if (comment == null) {
+			System.out.println("Comment null");
 		} else {
-			Collection<Comment> tmp = post.getComments();
-			tmp.add(comment);
-			post.setComments(tmp);
+			em.persist(comment);
+			Post post = em.find(Post.class, Float.valueOf(id).intValue());
+			post.getComments().add(comment);
 			em.merge(post);
 		}
 	}
