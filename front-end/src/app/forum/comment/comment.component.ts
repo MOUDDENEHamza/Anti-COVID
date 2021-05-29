@@ -32,8 +32,8 @@ export class CommentComponent implements OnInit {
   }
 
   onPost () : void {
-    this.addPostService.addComment(this.commentForm.get('author').value,
-    this.commentForm.get('date').value, this.commentForm.get('content').value, this.post).subscribe();
+    this.addPostService.addComment(this.post.id, this.commentForm.get('author').value,
+    this.commentForm.get('date').value, this.commentForm.get('content').value).subscribe();
   }
 
 }

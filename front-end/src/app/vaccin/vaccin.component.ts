@@ -19,7 +19,6 @@ export class VaccinComponent implements OnInit {
   constructor(private http: HttpClient) {
     this.http.get('http://localhost:8080/AntiCOVID/rest/vaccination_center', { responseType: "json" }).subscribe(
       data => {
-        console.log(data);
         this.informations = data;
       },
       error => {
@@ -39,7 +38,7 @@ export class VaccinComponent implements OnInit {
   }
 
   hideContent() : boolean {
-    if (this.informations.length === 4456) {
+    if (this.informations.length === 2228) {
       this.downloadDone = true;
     }
     return this.downloadDone;

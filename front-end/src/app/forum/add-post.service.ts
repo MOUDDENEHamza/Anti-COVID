@@ -9,12 +9,14 @@ export class post {
   date: string;
   title: string;
   content: string;
+  comments : comment[];
 
-  constructor(author: string, date: string, title: string, content: string) {
+  constructor(author: string, date: string, title: string, content: string, comments : comment[]) {
     this.author = author;
     this.date = date;
     this.title = title;
     this.content = content;
+    this.comments = comments;
   }
 
 }
@@ -24,13 +26,11 @@ export class comment {
   author: string;
   date: string;
   content: string;
-  post: post;
 
-  constructor(author: string, date: string, content: string, post: post) {
+  constructor(author: string, date: string, content: string) {
     this.author = author;
     this.date = date;
     this.content = content;
-    this.post = post;
   }
 
 }
@@ -68,16 +68,16 @@ export class AddPostService {
   
   public addPost(author: string, date: string, title: string, content: string) {
     const headers = {'content-type': 'application/json'}  
-    const body = JSON.stringify(new post(author, date, title, content));
+    const body = JSON.stringify(new post(author, date, title, content, []));
     return this.http.post(this.baseURL + 'add_post', body ,{'headers': headers}).pipe(
       catchError(this.handleError)
     );
   }
 
-  public addComment(author: string, date: string, content: string, post: post) {
+  public addComment(postId : number, author: string, date: string, content: string) {
     const headers = {'content-type': 'application/json'}  
-    const body = JSON.stringify(new comment(author, date, content, post));
-    return this.http.put(this.baseURL + 'add_comment', body ,{'headers': headers}).pipe(
+    const body = JSON.stringify(new comment(author, date, content));
+    return this.http.put(this.baseURL + 'post_id=' + postId +'/add_comment', body ,{'headers': headers}).pipe(
       catchError(this.handleError)
     );
   }

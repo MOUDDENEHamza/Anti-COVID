@@ -44,6 +44,10 @@ mat-form-field, .post-button {
     width: 100%;
 }
 
+mat-card-actions {
+    margin-bottom: 0%;
+}
+
 .add {
     padding-bottom: 2%;
 }

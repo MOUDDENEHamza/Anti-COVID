@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddPostService } from './add-post.service';
 import { MatAccordion } from '@angular/material/expansion';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { CommentComponent } from './comment/comment.component';
 
 @Component({
@@ -16,7 +16,7 @@ export class ForumComponent implements OnInit {
   title = 'Forum';
   postForm: FormGroup;
   posts: any = [];
-  likeColor = "";
+  likesColor : string[] = [];
   @ViewChild(MatAccordion) accordion: MatAccordion;
   open = false;
 
@@ -24,6 +24,9 @@ export class ForumComponent implements OnInit {
     this.http.get('http://localhost:8080/AntiCOVID/rest/get_posts_list', { responseType: "json" }).subscribe(
       data => {
         this.posts = data;
+        for (var i = 0; i < this.posts.length; i++) {
+          this.likesColor.push('');
+        }
       },
       error => {
         console.log(error);
@@ -53,11 +56,19 @@ export class ForumComponent implements OnInit {
     location.reload();
   }
 
-  onLike () : void {
-    if (this.likeColor === '') {
-      this.likeColor = 'primary';
+  getIndex (id : number) : number {
+    for (var i = 0; i < this.posts.length; i++) {
+      if (this.posts[i].id === id) {
+        return i;
+      }
+    }
+  }
+
+  onLike (index : number) : void {
+    if (this.likesColor[index] === '') {
+      this.likesColor[index] = 'primary';
     } else {
-      this.likeColor = '';
+      this.likesColor[index] = '';
     }
   }
 
