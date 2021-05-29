@@ -14,6 +14,9 @@
         <class>pack.VaccinationCenter</class>
         <class>pack.Address</class>
         <class>pack.Appointment</class>
+        <class>pack.User</class>
+        <class>pack.Post</class>
+        <class>pack.Comment</class>
         
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />

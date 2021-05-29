@@ -25,10 +25,10 @@ public class VaccinationCenter implements Serializable {
 	
 	private String name;
 	
-	@OneToOne(mappedBy = "vaccinationCenter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "vaccinationCenter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Address address;
 	
-	@OneToOne(mappedBy = "vaccinationCenter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "vaccinationCenter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Appointment appointment;
 
 	public Long getId() {

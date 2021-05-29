@@ -3,9 +3,11 @@ package pack;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,7 +35,7 @@ public class Address implements Serializable {
 	
 	private String region;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
 	private VaccinationCenter vaccinationCenter;
 	

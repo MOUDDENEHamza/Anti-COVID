@@ -10,12 +10,18 @@ import java.util.UUID;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 @Singleton
 @Path("/")
@@ -214,12 +220,12 @@ public class Facade {
 	 * Update the database with the current data of vaccination center
 	 */
 	@POST
-	@Path("/vaccinationCenter")
+	@Path("/vaccination_center")
 	public void updateVaccin() {
 		try {
-			VaccinationCenter vc = new VaccinationCenter();
 			List<List<String>> records = CSVUtility.parseCSVVaccinFile();
 			for (int i = 0; i < records.size(); i++) {
+				VaccinationCenter vc = new VaccinationCenter();
 				vc.setName(records.get(i).get(0));
 				Address a = new Address();
 				if (records.get(i).get(1).length() > 0 ) {
@@ -254,12 +260,90 @@ public class Facade {
 	 * @return a collection of VaccinationCenter
 	 */
 	@GET
-	@Path("/vaccinationCenter")
+	@Path("/vaccination_center")
 	@Produces({"application/json"})
 	public Collection<VaccinationCenter> getVaccin() {
 		return em.createQuery("FROM VaccinationCenter", VaccinationCenter.class).getResultList();
 	}
+	/*************************************************************************/
 	
+	/*************************************************************************/
+	/*									FORUM								 */
+	/*************************************************************************/
+	@GET
+	@Path("/get_posts_list")
+	@Produces({"application/json"})
+	public Collection<Post> getPostsList() {
+		return em.createQuery("FROM Post", Post.class).getResultList();
+	}
+	
+	@POST
+	@Path("/add_post")
+	@Consumes({"application/json"})
+	public void addPost(Post post) {
+		em.persist(post);
+	}
+	
+	@PUT
+	@Path("/post_id={id}/add_comment")
+	@Consumes({"application/json"})
+	public void addComment(@PathParam("id") String id, Comment comment) {
+		if (comment == null) {
+			System.out.println("Comment null");
+		} else {
+			em.persist(comment);
+			Post post = em.find(Post.class, Float.valueOf(id).intValue());
+			post.getComments().add(comment);
+			em.merge(post);
+		}
+	}
+	
+	@DELETE
+	@Path("/delete_posts_list")
+	public void deletePostsList() {
+		Collection<Post> l = em.createQuery("FROM Post", Post.class).getResultList();
+		for (Post p : l) {
+			em.remove(p);
+		}
+	}
+	/*************************************************************************/
+	
+	@GET
+	@Path("/get_users_list")
+	@Produces({"application/json"})
+	public Collection<User> getUsersList() {
+		return em.createQuery("FROM User", User.class).getResultList();
+	}
+	
+	@GET
+	@Path("/get_user_by_email")
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({"application/json"})
+	public User getUserByEmail(String email) {
+		User user = null;
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email")
+		.setParameter("email", email);
+		try {
+			user = (User) query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println("This user does not exist.");
+			return null;
+		}
+		return user;	
+	}
+	
+	@POST
+	@Path("/add_user")
+	@Consumes({"application/json"})
+	public void addUser(User user) {
+		em.persist(user);
+	}
+	
+	@DELETE
+	@Path("/delete_users_list")
+	public void deleteUsersList() {
+		em.createQuery("DELETE FROM User");
+	}
 	/*************************************************************************/
 	
 	/**

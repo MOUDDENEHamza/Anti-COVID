@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Comments</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="this.commentForm">
+        <mat-form-field>
+          <textarea matInput placeholder="Write a comment ..." formControlName="content" required class="comment"></textarea>
+          <mat-error *ngIf="this.commentForm.get('content').invalid">{{ getErrorMessage() }}</mat-error>
+        </mat-form-field>
+      </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close [disabled]="this.commentForm.invalid" (click)="this.onPost()">
+      Post
+    </button>
+</mat-dialog-actions>
