@@ -1,6 +1,7 @@
 <mat-toolbar class="navbar">
   <mat-toolbar-row>
     <div>
+
       <div *ngIf="this.item === 'default'">
         <a mat-button routerLink="home">
           <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
@@ -10,11 +11,16 @@
           <mat-icon aria-hidden="false" aria-label="Example assessment icon">assessment</mat-icon>
           Covid overview
         </a>
+        <a mat-button routerLink="faq">
+          <mat-icon aria-hidden="false" aria-label="Example feedback icon">feedback</mat-icon>
+          FAQ
+        </a>
         <a mat-button routerLink="contact">
           <mat-icon aria-hidden="false" aria-label="Example contact_support icon">contact_support</mat-icon>
           Contact
         </a>
       </div>
+
       <div *ngIf="this.item !== 'default'">
         <a mat-button routerLink="home">
           <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
@@ -32,11 +38,16 @@
           <mat-icon aria-hidden="false" aria-label="Example forum icon">forum</mat-icon>
           Forum
         </a>
+        <a mat-button routerLink="faq">
+          <mat-icon aria-hidden="false" aria-label="Example forum icon">forum</mat-icon>
+          FAQ
+        </a>
         <a mat-button routerLink="contact">
           <mat-icon aria-hidden="false" aria-label="Example contact_support icon">contact_support</mat-icon>
           Contact
         </a>
       </div>
+
     </div>
 
     <div class="right">

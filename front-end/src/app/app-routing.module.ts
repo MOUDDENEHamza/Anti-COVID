@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: 'contact', loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule) },
   { path: 'forum', loadChildren: () => import('./forum/forum.module').then(m => m.ForumModule) },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
-  { path: 'statistics', loadChildren: () => import('./statistics/statistics.module').then(m => m.StatisticsModule) }
+  { path: 'statistics', loadChildren: () => import('./statistics/statistics.module').then(m => m.StatisticsModule) },
+  { path: 'faq', loadChildren: () => import('./faq/faq.module').then(m => m.FaqModule) }
 ];
 
 @NgModule({
