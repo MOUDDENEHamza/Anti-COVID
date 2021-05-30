@@ -199,6 +199,52 @@ public class Facade {
 		return em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
 				.setParameter("name", "Death").getResultList();
 	}
+	
+	/**
+	 * Get the last overview linked to Coronavirus informations
+	 * @return the last overview entity
+	 */
+	@GET
+	@Path("/daily_overview")
+	@Produces({"application/json"})
+	public Response getDailyOverview() {
+		Overview overview = new Overview();
+		
+		// New_cases
+		Query query = em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
+				.setParameter("name", "New_cases");
+		MultiSeries multiSeries = (MultiSeries) query.getSingleResult();
+		List<Series> series = (List<Series>) multiSeries.getSeries();
+		Series serie = series.get(multiSeries.getSeries().size() - 1);
+		overview.setDate(serie.getName());
+		overview.setNewCases(serie.getValue());
+		
+		// Death
+		query = em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
+				.setParameter("name", "Death");
+		multiSeries = (MultiSeries) query.getSingleResult();
+		series = (List<Series>) multiSeries.getSeries();
+		serie = series.get(multiSeries.getSeries().size() - 1);
+		overview.setDeath(serie.getValue());
+		
+		// Recovered
+		query = em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
+				.setParameter("name", "Recovered");
+		multiSeries = (MultiSeries) query.getSingleResult();
+		series = (List<Series>) multiSeries.getSeries();
+		serie = series.get(multiSeries.getSeries().size() - 1);
+		overview.setRecovered(serie.getValue());
+		
+		// Total_cases
+		query = em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
+				.setParameter("name", "Total_cases");
+		multiSeries = (MultiSeries) query.getSingleResult();
+		series = (List<Series>) multiSeries.getSeries();
+		serie = series.get(multiSeries.getSeries().size() - 1);
+		overview.setTotalCases(serie.getValue());
+				
+		return Response.status(Response.Status.OK).entity(overview).build();
+	}
 	/*************************************************************************/
 	
 	/*************************************************************************/
@@ -381,7 +427,6 @@ public class Facade {
 			User user = (User) query.getSingleResult();
 			return Response.status(Response.Status.OK).entity(user).build();
 		} catch (NoResultException e) {
-			System.out.println("This .");
 			return Response.status(Response.Status.NOT_FOUND).entity("ERROR : User does not exist\n").build();
 		}	
 	}

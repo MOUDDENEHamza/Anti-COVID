@@ -1,0 +1,35 @@
+<mat-grid-list cols="4" rowHeight="2.5:1">
+    
+    <mat-grid-tile [colspan]="4" [rowspan]="1">
+        <h1>Last update : {{ this.overview.date | date }}</h1>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <div>
+            <h2>{{ this.overview.newCases }}</h2>
+            New cases
+        </div>
+    </mat-grid-tile>
+    
+    <mat-grid-tile>
+        <div>
+            <h2>{{ this.overview.death }}</h2>
+            Death
+        </div>
+    </mat-grid-tile>
+    
+    <mat-grid-tile>
+        <div>
+            <h2>{{ this.overview.recovered }}</h2>
+            Recovered
+        </div>
+    </mat-grid-tile>
+    
+    <mat-grid-tile>
+        <div>
+            <h2>{{ this.overview.totalCases }}</h2>
+            Total cases
+        </div>
+    </mat-grid-tile>
+
+</mat-grid-list>
