@@ -33,6 +33,7 @@ export class TodayOverviewComponent implements OnInit {
   constructor(private http: HttpClient) {
     this.http.get('http://localhost:8080/AntiCOVID/rest/daily_overview', { responseType: "json" }).subscribe(
       data => {
+        console.log(data)
         this.overview = data;
       },
       error => {

@@ -5,6 +5,8 @@ import { AddPostService } from './add-post.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
 import { CommentComponent } from './comment/comment.component';
+import { Subscription } from 'rxjs';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-forum',
@@ -19,9 +21,15 @@ export class ForumComponent implements OnInit {
   likesColor : string[] = [];
   @ViewChild(MatAccordion) accordion: MatAccordion;
   open = false;
+  item : any;
+  subscription : Subscription;
+  todayISOString : string = new Date().toISOString();
 
-  constructor(private addPostService: AddPostService, private http: HttpClient, public dialog: MatDialog) {
-    this.http.get('http://localhost:8080/AntiCOVID/rest/get_posts_list', { responseType: "json" }).subscribe(
+  constructor(private addPostService: AddPostService,
+              private http: HttpClient,
+              public dialog: MatDialog,
+              private data : DataService) {
+      this.http.get('http://localhost:8080/AntiCOVID/rest/get_posts_list', { responseType: "json" }).subscribe(
       data => {
         this.posts = data;
         for (var i = 0; i < this.posts.length; i++) {
@@ -41,6 +49,11 @@ export class ForumComponent implements OnInit {
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required])
     });
+    this.subscription = this.data.currentItem.subscribe(item => this.item = item);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   getErrorMessage() {

@@ -29,7 +29,7 @@ mat-card {
 }
 
 .header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url('../../assets/avatar.png');
     background-size: cover;
 }
 

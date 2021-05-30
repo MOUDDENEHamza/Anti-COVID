@@ -8,8 +8,8 @@
         <mat-card class="add post">
           <mat-card-header>
             <div mat-card-avatar class="header-image"></div>
-            <mat-card-title>Hamza Mouddene</mat-card-title>
-            <mat-card-subtitle>May 26, 2021</mat-card-subtitle>
+            <mat-card-title>{{ this.item.firstName }} {{ this.item.lastName }}</mat-card-title>
+            <mat-card-subtitle>{{ todayISOString | date }}</mat-card-subtitle>
           </mat-card-header>
           
           <mat-card-content>

@@ -213,7 +213,7 @@ public class Facade {
 		// New_cases
 		Query query = em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
 				.setParameter("name", "New_cases");
-		MultiSeries multiSeries = (MultiSeries) query.getSingleResult();
+		MultiSeries multiSeries = (MultiSeries) query.getResultList().get(query.getResultList().size() - 1);
 		List<Series> series = (List<Series>) multiSeries.getSeries();
 		Series serie = series.get(multiSeries.getSeries().size() - 1);
 		overview.setDate(serie.getName());
@@ -222,7 +222,7 @@ public class Facade {
 		// Death
 		query = em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
 				.setParameter("name", "Death");
-		multiSeries = (MultiSeries) query.getSingleResult();
+		multiSeries = (MultiSeries) query.getResultList().get(query.getResultList().size() - 1);
 		series = (List<Series>) multiSeries.getSeries();
 		serie = series.get(multiSeries.getSeries().size() - 1);
 		overview.setDeath(serie.getValue());
@@ -230,7 +230,7 @@ public class Facade {
 		// Recovered
 		query = em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
 				.setParameter("name", "Recovered");
-		multiSeries = (MultiSeries) query.getSingleResult();
+		multiSeries = (MultiSeries) query.getResultList().get(query.getResultList().size() - 1);
 		series = (List<Series>) multiSeries.getSeries();
 		serie = series.get(multiSeries.getSeries().size() - 1);
 		overview.setRecovered(serie.getValue());
@@ -238,7 +238,7 @@ public class Facade {
 		// Total_cases
 		query = em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
 				.setParameter("name", "Total_cases");
-		multiSeries = (MultiSeries) query.getSingleResult();
+		multiSeries = (MultiSeries) query.getResultList().get(query.getResultList().size() - 1);
 		series = (List<Series>) multiSeries.getSeries();
 		serie = series.get(multiSeries.getSeries().size() - 1);
 		overview.setTotalCases(serie.getValue());
