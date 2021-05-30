@@ -10,7 +10,7 @@
               <label>
                 <input matInput placeholder="xyz@gmail.com" formControlName="email" required>
               </label>
-              <mat-error *ngIf="this.userForm.get('email').invalid">{{ getErrorMessage() }}</mat-error>
+              <mat-error *ngIf="this.userForm.get('email').invalid">{{ getErrorMessage('email') }}</mat-error>
             </mat-form-field>
             
             <br>
@@ -23,7 +23,7 @@
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-                <mat-error *ngIf="this.userForm.get('password').invalid">{{ getErrorMessage() }}</mat-error>
+                <mat-error *ngIf="this.userForm.get('password').invalid">{{ getErrorMessage('password') }}</mat-error>
             </mat-form-field>
 
           </form>
@@ -32,5 +32,10 @@
             <mat-icon aria-hidden="false" aria-label="Example login icon">login</mat-icon>
             Log in
         </button>
+        <br><br>
+        <button class="register" mat-raised-button color="primary" (click)="onCreate()">
+          <mat-icon aria-hidden="false" aria-label="Example create icon">create</mat-icon>
+          Create an account 
+      </button>
     </mat-card>
   </div>

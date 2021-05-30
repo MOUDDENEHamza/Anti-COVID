@@ -7,7 +7,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,7 +28,7 @@ public class Address implements Serializable {
 	
 	private String street;
 	
-	private String zipCode;
+	private int zipCode;
 	
 	private String city;
 	
@@ -63,11 +62,11 @@ public class Address implements Serializable {
 		this.street = street;
 	}
 
-	public String getZipCode() {
+	public int getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(String zipCode) {
+	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 

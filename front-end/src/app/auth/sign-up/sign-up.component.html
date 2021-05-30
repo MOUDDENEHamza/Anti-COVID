@@ -10,7 +10,7 @@
                 <label>
                     <input matInput placeholder="Marine" formControlName="firstName" required>
                 </label>
-                <mat-error *ngIf="this.userForm.get('firstName').invalid">{{ getErrorMessage() }}</mat-error>
+                <mat-error *ngIf="this.userForm.get('firstName').invalid">{{ getErrorMessage('firstName') }}</mat-error>
             </mat-form-field>
             
             <br>
@@ -20,7 +20,7 @@
                 <label>
                     <input matInput placeholder="Dupont" formControlName="lastName" required>
                 </label>
-                <mat-error *ngIf="this.userForm.get('lastName').invalid">{{ getErrorMessage() }}</mat-error>
+                <mat-error *ngIf="this.userForm.get('lastName').invalid">{{ getErrorMessage('lastName') }}</mat-error>
             </mat-form-field>
     
             <br>
@@ -30,7 +30,7 @@
               <label>
                 <input matInput placeholder="xyz@gmail.com" formControlName="email" required>
               </label>
-              <mat-error *ngIf="this.userForm.get('email').invalid">{{ getErrorMessage() }}</mat-error>
+              <mat-error *ngIf="this.userForm.get('email').invalid">{{ getErrorMessage('email') }}</mat-error>
             </mat-form-field>
             
             <br>
@@ -43,7 +43,20 @@
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-                <mat-error *ngIf="this.userForm.get('password').invalid">{{ getErrorMessage() }}</mat-error>
+                <mat-error *ngIf="this.userForm.get('password').invalid">{{ getErrorMessage('password') }}</mat-error>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Confirm your password</mat-label>
+                <label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" required>
+                </label>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="this.userForm.get('password').invalid">{{ getErrorMessage('confirmPassword') }}</mat-error>
             </mat-form-field>
 
           </form>

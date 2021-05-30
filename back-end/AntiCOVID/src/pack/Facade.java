@@ -21,7 +21,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 
 @Singleton
 @Path("/")
@@ -235,9 +236,9 @@ public class Facade {
 				}
 				a.setStreet(records.get(i).get(2));
 				if (records.get(i).get(3).length() > 0) {
-					a.setZipCode(records.get(i).get(3));	
+					a.setZipCode(Float.valueOf(records.get(i).get(3)).intValue());	
 				} else {
-					a.setZipCode("");
+					a.setZipCode(-1);
 				}
 				a.setCity(records.get(i).get(4));
 				a.setRegion(records.get(i).get(5));
@@ -264,6 +265,29 @@ public class Facade {
 	@Produces({"application/json"})
 	public Collection<VaccinationCenter> getVaccin() {
 		return em.createQuery("FROM VaccinationCenter", VaccinationCenter.class).getResultList();
+	}
+	
+	@GET
+	@Path("/vaccination_center/region={region}")
+	@Produces({"application/json"})
+	public Collection<VaccinationCenter> getVaccinationCenterByRegion(@PathParam("region") String region) {
+		return em.createQuery("SELECT v FROM VaccinationCenter v WHERE v.address.region = :region") 
+				.setParameter("region", region).getResultList();
+	}
+	
+	@GET
+	@Path("/vaccination_center/region={region}&zipCode={zipCode}")
+	@Produces({"application/json"})
+	public Collection<VaccinationCenter> getVaccinationCenterByRegion(@PathParam("region") String region,
+			@PathParam("zipCode") int zipCode) {
+		int threshold = Float.valueOf(zipCode).intValue() + 1000;
+		return em.createQuery("SELECT v FROM VaccinationCenter v"
+				+ " WHERE v.address.region = :region AND v.address.zipCode >= :zipCode"
+				+ " AND v.address.zipCode < :threshold") 
+				.setParameter("region", region)
+				.setParameter("zipCode", zipCode)
+				.setParameter("threshold", threshold)
+				.getResultList();
 	}
 	/*************************************************************************/
 	
@@ -316,33 +340,42 @@ public class Facade {
 	}
 	
 	@GET
-	@Path("/get_user_by_email")
-	@Consumes({MediaType.TEXT_PLAIN})
+	@Path("/get_user_by_email/email={email}&password={password}")
 	@Produces({"application/json"})
-	public User getUserByEmail(String email) {
-		User user = null;
-		Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email")
-		.setParameter("email", email);
+	public Response getUserByEmail(@PathParam("email") String email, @PathParam("password") String password) {
 		try {
-			user = (User) query.getSingleResult();
+			Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
+			.setParameter("email", email)
+			.setParameter("password", password);
+			User user = (User) query.getSingleResult();
+			return Response.status(Response.Status.OK).entity(user).build();
 		} catch (NoResultException e) {
-			System.out.println("This user does not exist.");
-			return null;
-		}
-		return user;	
+			System.out.println("This .");
+			return Response.status(Response.Status.NOT_FOUND).entity("ERROR : User does not exist\n").build();
+		}	
 	}
 	
 	@POST
 	@Path("/add_user")
 	@Consumes({"application/json"})
-	public void addUser(User user) {
+	public Response addUser(User user) {
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
+				.setParameter("email", user.getEmail())
+				.setParameter("password", user.getPassword());
+		if (!query.getResultList().isEmpty()) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERROR : User already exists\n").build();
+		} 
 		em.persist(user);
+		return Response.status(Response.Status.OK).entity("User has been created with success\n").build();
 	}
 	
 	@DELETE
 	@Path("/delete_users_list")
 	public void deleteUsersList() {
-		em.createQuery("DELETE FROM User");
+		Collection<User> l = em.createQuery("FROM User", User.class).getResultList();
+		for (User u : l) {
+			em.remove(u);
+		}
 	}
 	/*************************************************************************/
 	

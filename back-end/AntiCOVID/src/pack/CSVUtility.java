@@ -22,7 +22,7 @@ public class CSVUtility {
 		}
 		int first = index;
 		while (index < tmp.length) {
-			if (first == index && tmp[index].equals("DE")) {
+			if (first == index && (tmp[index].equals("DE") || tmp[index].equals("DU"))) {
 				
 			} else {
 				if (index == tmp.length - 1) {
