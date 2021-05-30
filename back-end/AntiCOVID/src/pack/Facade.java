@@ -467,17 +467,22 @@ public class Facade {
 	/**
 	 * Send an email to administrator from contact page
 	 * @param contact will send the email to administrator
+	 * @return OK if the email has been sent without problem, otherwise we
+	 * return an INTERNAL_SERVER_ERROR
 	 */
 	@POST
 	@Path("/contact")
 	@Consumes({"application/json"})
-	public void contactAdministrator(Contact contact) {
+	public Response contactAdministrator(Contact contact) {
 		try {
-			em.persist(contact);
-			EmailUtility.sendEmail(contact.getEmail(),
-					contact.getSubject(), contact.getContent());
+			Contact c = em.find(Contact.class, contact.getId());
+			if (c == null) {
+				em.persist(contact);
+			}
+			EmailUtility.sendEmail(contact.getEmail(),contact.getSubject(), contact.getContent());
+			return Response.status(Response.Status.OK).entity("Email has been sent with success\n").build();
         } catch (javax.mail.MessagingException e) {
-            e.printStackTrace();
+        	return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERROR : Failed to send email\n").build();
         }
 	}
 	/*************************************************************************/

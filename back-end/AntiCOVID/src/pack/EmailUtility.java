@@ -42,11 +42,11 @@ public class EmailUtility {
         Message msg = new MimeMessage(session);
  
         msg.setFrom(new InternetAddress("anticovid.service.client@gmail.com"));
-        InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
+        InternetAddress[] toAddresses = { new InternetAddress("anticovid.service.client@gmail.com") };
         msg.setRecipients(Message.RecipientType.TO, toAddresses);
         msg.setSubject(subject);
         msg.setSentDate(new Date());
-        msg.setText(message);
+        msg.setText(toAddress + "\n" +message);
         
         // sends the e-mail
         Transport.send(msg);

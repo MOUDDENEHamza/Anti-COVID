@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { DataService } from '../data.service';
 import { REGIONS } from './region-list';
 
 @Component({
@@ -8,7 +10,7 @@ import { REGIONS } from './region-list';
   templateUrl: './vaccin.component.html',
   styleUrls: ['./vaccin.component.css']
 })
-export class VaccinComponent implements OnInit {
+export class VaccinComponent implements OnInit, OnDestroy {
 
   title = 'Vaccin';
   downloadDone = true;
@@ -17,8 +19,13 @@ export class VaccinComponent implements OnInit {
   hide = true;
   coordinatesForm: FormGroup;
   regionList = REGIONS;
+  item : any;
+  subscription : Subscription;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private sharedData : DataService) {
+    this.subscription = this.sharedData.currentItem.subscribe(item => this.item = item);
+  }
 
   ngOnInit(): void {
     this.coordinatesForm = new FormGroup({
@@ -30,11 +37,13 @@ export class VaccinComponent implements OnInit {
    });
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   hideContent() : boolean {
-    if (this.informations.length === 2228) {
-      this.downloadDone = true;
-    }
-    return this.downloadDone;
+    console.log(this.item)
+    return this.item === 'default';
   }
 
   hideForm(): boolean {

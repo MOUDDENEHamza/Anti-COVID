@@ -19,7 +19,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { FailedSignInComponent } from './failed-sign-in/failed-sign-in.component';
 import { FailedSignUpComponent } from './failed-sign-up/failed-sign-up.component';
 import { SuccessSignUpComponent } from './success-sign-up/success-sign-up.component';
-import { DataService } from './data.service';
 import { FailedEditProfileComponent } from './failed-edit-profile/failed-edit-profile.component';
 import { SuccessEditProfileComponent } from './success-edit-profile/success-edit-profile.component';
 import { SuccessDeleteAccountComponent } from './success-delete-account/success-delete-account.component';
@@ -52,7 +51,6 @@ import { SuccessDeleteAccountComponent } from './success-delete-account/success-
     MatSnackBarModule
   ],
   providers: [
-    DataService 
   ]
 })
 export class AuthModule { }

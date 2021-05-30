@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
+import { Component, OnDestroy, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/data.service';
 import { FailedEditProfileComponent } from '../failed-edit-profile/failed-edit-profile.component';
 import { SuccessDeleteAccountComponent } from '../success-delete-account/success-delete-account.component';
 import { SuccessEditProfileComponent } from '../success-edit-profile/success-edit-profile.component';
@@ -31,7 +33,7 @@ export class User {
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit,OnDestroy {
 
   title = 'Profile';
   userForm: FormGroup;
@@ -39,13 +41,17 @@ export class ProfileComponent implements OnInit {
   notEditing = true;
   user : any;
   ok : boolean;
-
-  constructor(private http: HttpClient,
+  item : any;
+  subscription : Subscription;
+  
+  constructor(private http : HttpClient,
               private route : ActivatedRoute,
               private userService : UserService,
-              public dialog: MatDialog,
-              private router : Router) {
+              public dialog : MatDialog,
+              private router : Router,
+              private data : DataService) {
     this.user = JSON.parse((this.route.snapshot.paramMap.get('data')));
+    this.data.changeMessage(this.user);
   }
 
   ngOnInit(): void {
@@ -69,12 +75,17 @@ export class ProfileComponent implements OnInit {
           Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}')
         ])
     });
+    this.subscription = this.data.currentItem.subscribe(item => this.item = item)
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   /**
    * Get error message if an input is invalid
    */
-   getErrorMessage(item : string) : string {
+  getErrorMessage(item : string) : string {
     if (this.userForm.get(item).hasError('required')) {
       return 'You should fill this field.';
     } else if (item === 'password' && this.userForm.get('password').hasError('pattern')) {
@@ -95,7 +106,6 @@ export class ProfileComponent implements OnInit {
 
   onSave () : void {
     this.notEditing = !this.notEditing;
-    console.log(this.userForm.get('password').value);
     this.user = new User(this.user.id, this.userForm.get('firstName').value, this.userForm.get('lastName').value,
     this.userForm.get('email').value, this.userForm.get('password').value);
     this.userService.updateUser(this.user).subscribe(

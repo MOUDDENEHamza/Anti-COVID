@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ContactService } from './contact.service';
+import { FailedSendingEmailComponent } from './failed-sending-email/failed-sending-email.component';
+import { SuccessSendingEmailComponent } from './success-sending-email/success-sending-email.component';
 
 @Component({
   selector: 'app-contact',
@@ -17,7 +20,8 @@ export class ContactComponent implements OnInit {
   /**
    * Constructor of component.
    */
-  constructor(private contactService: ContactService) { }
+  constructor(private contactService: ContactService,
+              public dialog: MatDialog) { }
 
   /**
    * A lifecycle hook that is called after Angular has initialized all data-bound properties of a directive to
@@ -36,15 +40,13 @@ export class ContactComponent implements OnInit {
   /**
    * Get error message if an input is invalid
    */
-   getErrorMessage() {
-    if (this.contactForm.get('firstName').hasError('required')
-      || this.contactForm.get('lastName').hasError('required')
-      || this.contactForm.get('email').hasError('required')
-      || this.contactForm.get('subject').hasError('required')
-      || this.contactForm.get('content').hasError('required')) {
+   getErrorMessage(item : string) : string {
+    if (this.contactForm.get(item).hasError('required')) {
       return 'You should fill this field.';
-    } else {
-      return this.contactForm.get('email').hasError('email') ? 'Not a valid email' : '';
+    } else { 
+      if (this.contactForm.get(item).hasError('email')) {
+        return 'Not a valid email';
+      }
     }
   }
 
@@ -61,7 +63,15 @@ export class ContactComponent implements OnInit {
   onSubmit() {    
     this.contactService.sendEmail(this.contactForm.get('firstName').value,
     this.contactForm.get('lastName').value, this.contactForm.get('email').value,
-    this.contactForm.get('subject').value, this.contactForm.get('content').value).subscribe();
+    this.contactForm.get('subject').value, this.contactForm.get('content').value).subscribe(
+      data => {
+        console.log(data);
+        this.dialog.open(SuccessSendingEmailComponent);
+      },
+      error => {
+        this.dialog.open(FailedSendingEmailComponent);
+      }
+    );
     this.ngOnInit();
   }
 

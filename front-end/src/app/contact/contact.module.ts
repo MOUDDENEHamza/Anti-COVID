@@ -11,10 +11,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { ContactRoutingModule } from './contact-routing.module';
 import { ContactComponent } from './contact.component';
+import { SuccessSendingEmailComponent } from './success-sending-email/success-sending-email.component';
+import { FailedSendingEmailComponent } from './failed-sending-email/failed-sending-email.component';
 
 
 @NgModule({
-  declarations: [ContactComponent],
+  declarations: [ContactComponent, SuccessSendingEmailComponent, FailedSendingEmailComponent],
   imports: [
     CommonModule,
     ContactRoutingModule,

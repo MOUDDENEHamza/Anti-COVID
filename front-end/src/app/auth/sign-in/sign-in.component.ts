@@ -4,7 +4,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DataService} from '../data.service';
 import { FailedSignInComponent } from '../failed-sign-in/failed-sign-in.component';
 
 @Component({
@@ -22,19 +21,13 @@ export class SignInComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private router : Router,
-              public dialog: MatDialog,
-              private data: DataService) { }
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.subscription = this.data.currentMessage.subscribe(message => this.message = message)
     this.userForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
     });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   /**
@@ -56,7 +49,6 @@ export class SignInComponent implements OnInit {
     this.http.get('http://localhost:8080/AntiCOVID/rest/get_user_by_email/email=' + this.userForm.get('email').value +
     '&password=' + this.userForm.get('password').value,{ responseType: "json" }).subscribe(
       data => {
-        this.data.changeMessage(JSON.stringify(data));
         this.ngOnInit();
         this.router.navigate(['auth/profile', {data : JSON.stringify(data)}]);
       },

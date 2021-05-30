@@ -8,7 +8,7 @@
         <label>
           <input matInput placeholder="Marine" formControlName="firstName" required>
         </label>
-        <mat-error *ngIf="this.contactForm.get('firstName').invalid">{{ getErrorMessage() }}</mat-error>
+        <mat-error *ngIf="this.contactForm.get('firstName').invalid">{{ getErrorMessage('firstName') }}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="meduimField">
@@ -16,7 +16,7 @@
         <label>
           <input matInput placeholder="Dupont" formControlName="lastName" required>
         </label>
-        <mat-error *ngIf="this.contactForm.get('lastName').invalid">{{ getErrorMessage() }}</mat-error>
+        <mat-error *ngIf="this.contactForm.get('lastName').invalid">{{ getErrorMessage('lastName') }}</mat-error>
       </mat-form-field>
 
       <br>
@@ -26,7 +26,7 @@
         <label>
           <input matInput placeholder="xyz@gmail.com" formControlName="email" required>
         </label>
-        <mat-error *ngIf="this.contactForm.get('email').invalid">{{ getErrorMessage() }}</mat-error>
+        <mat-error *ngIf="this.contactForm.get('email').invalid">{{ getErrorMessage('email') }}</mat-error>
       </mat-form-field>
 
       <br>
@@ -36,7 +36,7 @@
         <label>
           <input matInput placeholder="Informations" formControlName="subject" required>
         </label>
-        <mat-error *ngIf="this.contactForm.get('subject').invalid">{{ getErrorMessage() }}</mat-error>
+        <mat-error *ngIf="this.contactForm.get('subject').invalid">{{ getErrorMessage('subject') }}</mat-error>
       </mat-form-field>
 
       <br>
@@ -46,7 +46,7 @@
         <label>
           <textarea matInput placeholder="Write your message here..." formControlName="content" required></textarea>
         </label>
-        <mat-error *ngIf="this.contactForm.get('content').invalid">{{ getErrorMessage() }}</mat-error>
+        <mat-error *ngIf="this.contactForm.get('content').invalid">{{ getErrorMessage('content') }}</mat-error>
       </mat-form-field>
 
     </form>
