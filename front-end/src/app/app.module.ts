@@ -7,6 +7,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,7 +29,8 @@ import { FooterComponent } from './footer/footer.component';
     MatButtonModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
-    })
+    }),
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

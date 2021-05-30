@@ -1,9 +1,8 @@
 <div class="wrapper">
-
-    <h1>{{ this.title }}</h1>
-
-    <div >
+    <div>
         
+        <h1>{{ this.title }}</h1>
+
         <img src="../../assets/avatar.png" alt="Avatar" class="avatar">
         
         <form [formGroup]="this.userForm">
@@ -42,12 +41,30 @@
             </mat-form-field>
 
         </form>
-            
-        <button mat-button [disabled]="!enable()" (click)="onEdit()">
-            EDIT PROFILE
+        
+        <div class="button-container">
+            <button mat-button [disabled]="!enable()" (click)="onEdit()" color="primary">
+                <mat-icon aria-hidden="false" aria-label="Example edit icon">edit</mat-icon>
+                EDIT PROFILE
+            </button>
+            <button mat-button [disabled]="enable()" (click)="onSave()">
+                <mat-icon aria-hidden="false" aria-label="Example save icon">save</mat-icon>
+                SAVE
+            </button>
+            <button mat-button (click)="onLogOut()" color="warn">
+                <mat-icon aria-hidden="false" aria-label="Example logout icon">logout</mat-icon>
+                LOG OUT
+            </button>
+        </div>
+        
+        <br>
+
+        <button mat-button (click)="onDelete()" class="delete-button" color="accent">
+            <mat-icon aria-hidden="false" aria-label="Example delete icon">delete</mat-icon>
+            DELETE ACCOUNT
         </button>
-        <button mat-button [disabled]="enable()" (click)="onSave()">
-            SAVE
-        </button>
+
+        
+    </div>
        
 </div>

@@ -73,7 +73,9 @@ export class ForumComponent implements OnInit {
   }
 
   onComment (post) : void {
-    this.dialog.open(CommentComponent, {data: post});
+    this.dialog.open(CommentComponent, {data: post}).afterClosed().subscribe(result => {
+      location.reload();
+    });
   }
 
 }

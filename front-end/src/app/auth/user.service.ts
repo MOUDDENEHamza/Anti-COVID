@@ -50,12 +50,13 @@ export class UserService {
       return throwError(
         'Something bad happened; please try again later.');
       
+    } else {
+      return 'o';
     }
-    return 'Success';
   }
   
   /**
-   * Send the form contact to administrator.
+   * Send a new user to backend.
    */
   public addUser(firstName: string, lastName: string, email: string, password: string) {
     const headers = {'content-type': 'application/json'}  
@@ -64,4 +65,18 @@ export class UserService {
       catchError(this.handleError)
     );
   }
+
+  /**
+   * Send an update request of user to backend
+   * @param user we want to update
+   * @returns the response from backend
+   */
+  public updateUser(user : any) {
+    const headers = {'content-type': 'application/json'}  
+    const body = JSON.stringify(user);
+    return this.http.put(this.baseURL + 'update_user', body ,{'headers': headers}).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 }

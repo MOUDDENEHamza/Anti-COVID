@@ -1,38 +1,74 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { DataService} from '../data.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FailedEditProfileComponent } from '../failed-edit-profile/failed-edit-profile.component';
+import { SuccessDeleteAccountComponent } from '../success-delete-account/success-delete-account.component';
+import { SuccessEditProfileComponent } from '../success-edit-profile/success-edit-profile.component';
+import { UserService } from '../user.service';
+
+export class User {
+  
+  id : number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+
+  constructor(id : number, firstName: string, lastName: string, email: string, password: string) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+  }
+
+}
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit {
 
   title = 'Profile';
   userForm: FormGroup;
   hide = true;
   notEditing = true;
-  message:string;
-  subscription: Subscription;
+  user : any;
+  ok : boolean;
 
-  constructor(private data: DataService) {
-    console.log(this.message);
+  constructor(private http: HttpClient,
+              private route : ActivatedRoute,
+              private userService : UserService,
+              public dialog: MatDialog,
+              private router : Router) {
+    this.user = JSON.parse((this.route.snapshot.paramMap.get('data')));
   }
 
   ngOnInit(): void {
-    this.subscription = this.data.currentMessage.subscribe(message => this.message = message);
     this.userForm = new FormGroup({
-      firstName: new FormControl({value : 'Hamza', disabled: this.notEditing}, [Validators.required]),
-      lastName: new FormControl({value : 'Mouddene', disabled: this.notEditing}, [Validators.required]),
-      email: new FormControl({value : 'hz.mouddene@gmail.com', disabled: true}, [Validators.required, Validators.email]),
-      password: new FormControl({value : '12345678', disabled: true}, [Validators.required, Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}')])
+      firstName: new FormControl(
+        {value : this.user.firstName, disabled: this.notEditing},
+        [Validators.required]
+      ),
+      lastName: new FormControl(
+        {value : this.user.lastName, disabled: this.notEditing},
+        [Validators.required]
+      ),
+      email: new FormControl(
+        {value : this.user.email, disabled: this.notEditing},
+        [Validators.required, Validators.email]
+      ),
+      password: new FormControl(
+        {value : this.user.password, disabled: this.notEditing}, 
+        [
+          Validators.required,
+          Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}')
+        ])
     });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   /**
@@ -59,7 +95,33 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onSave () : void {
     this.notEditing = !this.notEditing;
+    console.log(this.userForm.get('password').value);
+    this.user = new User(this.user.id, this.userForm.get('firstName').value, this.userForm.get('lastName').value,
+    this.userForm.get('email').value, this.userForm.get('password').value);
+    this.userService.updateUser(this.user).subscribe(
+      data => {
+        this.dialog.open(SuccessEditProfileComponent);
+      },
+      error => {
+        this.dialog.open(FailedEditProfileComponent);
+      }
+    );
     this.ngOnInit();
+  }
+
+  onLogOut() : void {
+    this.router.navigateByUrl('auth/sign-in');
+  }
+
+  onDelete() : void {
+    this.http.get('http://localhost:8080/AntiCOVID/rest/delete_user/id=' + this.user.id,{ responseType: "json" }).subscribe(
+      data => {
+      },
+      error => {
+      }
+    );
+    this.dialog.open(SuccessDeleteAccountComponent);
+    this.router.navigateByUrl('auth/sign-in');
   }
 
 }

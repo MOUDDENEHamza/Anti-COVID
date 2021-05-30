@@ -56,9 +56,9 @@ export class SignInComponent implements OnInit {
     this.http.get('http://localhost:8080/AntiCOVID/rest/get_user_by_email/email=' + this.userForm.get('email').value +
     '&password=' + this.userForm.get('password').value,{ responseType: "json" }).subscribe(
       data => {
-        this.data.changeMessage(this.userForm.get('email').value);
+        this.data.changeMessage(JSON.stringify(data));
         this.ngOnInit();
-        this.router.navigateByUrl('auth/profile');
+        this.router.navigate(['auth/profile', {data : JSON.stringify(data)}]);
       },
       error => {
         if (error.status >= 400) {

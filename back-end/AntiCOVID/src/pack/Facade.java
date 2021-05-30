@@ -1,12 +1,9 @@
 package pack;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
@@ -30,27 +27,10 @@ public class Facade {
 	
 	@PersistenceContext
 	EntityManager em;
-	
-	/**
-     * Generate unique ID from UUID
-     * @return long value representing UUID
-     */
-    public Long generateUniqueId() {
-        long val = -1;
-        do {
-            final UUID uid = UUID.randomUUID();
-            final ByteBuffer buffer = ByteBuffer.wrap(new byte[16]);
-            buffer.putLong(uid.getLeastSignificantBits());
-            buffer.putLong(uid.getMostSignificantBits());
-            final BigInteger bi = new BigInteger(buffer.array());
-            val = bi.longValue();
-        }
-        while (val < 0);
-        	return val;
-    }
     
 	/*************************************************************************/
-    
+	/*									HOME								 */
+	/*************************************************************************/
 	/**
 	 * Update the database with the current data of new cases
 	 * @throws IOException
@@ -82,12 +62,14 @@ public class Facade {
 	 * Get new cases data
 	 * @return a collection of MultiSeries entity
 	 */
+	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/new_cases")
 	@Produces({"application/json"})
 	public Collection<MultiSeries> getNewCases() {
-		return em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
-				.setParameter("name", "New_cases").getResultList();
+		Query query = em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
+				.setParameter("name", "New_cases");
+		return query.getResultList();
 	}
 	
 	/**
@@ -121,6 +103,7 @@ public class Facade {
 	 * Get total cases data
 	 * @return a collection of MultiSeries entity
 	 */
+	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/total_cases")
 	@Produces({"application/json"})
@@ -164,6 +147,7 @@ public class Facade {
 	 * Get recovered cases data
 	 * @return a collection of MultiSeries entity
 	 */
+	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/recovered")
 	@Produces({"application/json"})
@@ -207,6 +191,7 @@ public class Facade {
 	 * Get death cases data
 	 * @return a collection of MultiSeries entity
 	 */
+	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/death")
 	@Produces({"application/json"})
@@ -214,11 +199,13 @@ public class Facade {
 		return em.createQuery("SELECT m FROM MultiSeries m WHERE m.name = :name")
 				.setParameter("name", "Death").getResultList();
 	}
-	
 	/*************************************************************************/
 	
+	/*************************************************************************/
+	/*									VACCIN								 */
+	/*************************************************************************/
 	/**
-	 * Update the database with the current data of vaccination center
+	 * Update the database with the current data of VaccinationCenter
 	 */
 	@POST
 	@Path("/vaccination_center")
@@ -267,6 +254,12 @@ public class Facade {
 		return em.createQuery("FROM VaccinationCenter", VaccinationCenter.class).getResultList();
 	}
 	
+	/**
+	 * Get VaccinationCenter by region
+	 * @param region we are looking for
+	 * @return collection of all VaccinationCenter in the given region
+	 */
+	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/vaccination_center/region={region}")
 	@Produces({"application/json"})
@@ -275,6 +268,14 @@ public class Facade {
 				.setParameter("region", region).getResultList();
 	}
 	
+	/**
+	 * Get VaccinationCenter by region and department
+	 * @param region we are looking for
+	 * @param zipCode of you department
+	 * @return collection of all VaccinationCenter in the given region and
+	 * department
+	 */
+	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/vaccination_center/region={region}&zipCode={zipCode}")
 	@Produces({"application/json"})
@@ -294,6 +295,10 @@ public class Facade {
 	/*************************************************************************/
 	/*									FORUM								 */
 	/*************************************************************************/
+	/**
+	 * Get the list of all post stored on the database
+	 * @return collection of all existing posts
+	 */
 	@GET
 	@Path("/get_posts_list")
 	@Produces({"application/json"})
@@ -301,6 +306,10 @@ public class Facade {
 		return em.createQuery("FROM Post", Post.class).getResultList();
 	}
 	
+	/**
+	 * Add a new post to the database
+	 * @param post we want store on the database
+	 */
 	@POST
 	@Path("/add_post")
 	@Consumes({"application/json"})
@@ -308,6 +317,11 @@ public class Facade {
 		em.persist(post);
 	}
 	
+	/**
+	 * Add a comment to an existing post
+	 * @param id of the existing post
+	 * @param comment we want to add to the post
+	 */
 	@PUT
 	@Path("/post_id={id}/add_comment")
 	@Consumes({"application/json"})
@@ -322,6 +336,9 @@ public class Facade {
 		}
 	}
 	
+	/**
+	 * Delete all the posts on the database
+	 */
 	@DELETE
 	@Path("/delete_posts_list")
 	public void deletePostsList() {
@@ -332,6 +349,13 @@ public class Facade {
 	}
 	/*************************************************************************/
 	
+	/*************************************************************************/
+	/*									USER								 */
+	/*************************************************************************/
+	/**
+	 * Get all existing user on the database
+	 * @return the collection of all users
+	 */
 	@GET
 	@Path("/get_users_list")
 	@Produces({"application/json"})
@@ -339,6 +363,13 @@ public class Facade {
 		return em.createQuery("FROM User", User.class).getResultList();
 	}
 	
+	/**
+	 * Get user by their credentials
+	 * @param email of the user we are looking for
+	 * @param password corresponding on the previous email
+	 * @return the user if he exists on the database, otherwise we return a
+	 * not found response
+	 */
 	@GET
 	@Path("/get_user_by_email/email={email}&password={password}")
 	@Produces({"application/json"})
@@ -355,6 +386,12 @@ public class Facade {
 		}	
 	}
 	
+	/**
+	 * Add a new user to the database
+	 * @param user we want to add
+	 * @return OK response if the user doesn't exist, otherwise
+	 * INTERNAL_SERVER_ERROR if the user already exists
+	 */
 	@POST
 	@Path("/add_user")
 	@Consumes({"application/json"})
@@ -369,6 +406,34 @@ public class Facade {
 		return Response.status(Response.Status.OK).entity("User has been created with success\n").build();
 	}
 	
+	/**
+	 * 	Update an existing user
+	 * @param user we want to update
+	 * @return NOT_FOUND response if the user doesn't exist,
+	 * INTERNAL_SERVER_ERROR if the user given on parameter already exists,
+	 * otherwise OK response is returned
+	 */
+	@PUT
+	@Path("/update_user")
+	@Consumes({"application/json"})
+	public Response updateUser(User user) {
+		User u = em.find(User.class, user.getId());
+		if (u == null) {
+			return Response.status(Response.Status.NOT_FOUND).entity("ERROR : User doesn't exist\n").build();
+		}
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
+				.setParameter("email", user.getEmail())
+				.setParameter("password", user.getPassword());
+		if (!query.getResultList().isEmpty()) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERROR : User already exists\n").build();
+		} 
+		em.merge(user);
+		return Response.status(Response.Status.OK).entity("User has been updated with success\n").build();
+	}
+	
+	/**
+	 * Delete all existing user on the database
+	 */
 	@DELETE
 	@Path("/delete_users_list")
 	public void deleteUsersList() {
@@ -377,8 +442,28 @@ public class Facade {
 			em.remove(u);
 		}
 	}
+	
+	/**
+	 * Delete user by a given id from database
+	 * @param id of the user we want delete
+	 * @return NOT_FOUND response if the user doesn't exist, otherwise OK
+	 * response will be returned
+	 */
+	@GET
+	@Path("/delete_user/id={id}")
+	public Response deleteUserByID(@PathParam("id") int id) {
+		User user = em.find(User.class, id);
+		if (user == null) {
+			return Response.status(Response.Status.NOT_FOUND).entity("ERROR : User doesn't exist\n").build();
+		}
+		em.remove(user);
+		return Response.status(Response.Status.OK).entity("User has been deleted with success\n").build();
+	} 
 	/*************************************************************************/
 	
+	/*************************************************************************/
+	/*									CONTACT								 */
+	/*************************************************************************/
 	/**
 	 * Send an email to administrator from contact page
 	 * @param contact will send the email to administrator
@@ -395,5 +480,6 @@ public class Facade {
             e.printStackTrace();
         }
 	}
+	/*************************************************************************/
 	
 }

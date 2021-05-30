@@ -51,11 +51,8 @@
             <mat-form-field appearance="fill">
                 <mat-label>Confirm your password</mat-label>
                 <label>
-                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" required>
+                    <input matInput [type]="true ? 'password' : 'text'" formControlName="confirmPassword" required>
                 </label>
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
                 <mat-error *ngIf="this.userForm.get('password').invalid">{{ getErrorMessage('confirmPassword') }}</mat-error>
             </mat-form-field>
 

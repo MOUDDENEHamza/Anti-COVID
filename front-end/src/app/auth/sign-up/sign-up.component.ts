@@ -57,15 +57,15 @@ export class SignUpComponent implements OnInit {
       this.userForm.get('lastName').value, this.userForm.get('email').value,
       this.userForm.get('password').value).subscribe(
         data => {
+          this.dialog.open(SuccessSignUpComponent);
+          this.ngOnInit();
+          this.router.navigateByUrl('auth/sign-in');
         },
         error => {
           this.dialog.open(FailedSignUpComponent);
           this.ngOnInit();
         }
       );
-      this.dialog.open(SuccessSignUpComponent);
-      this.ngOnInit();
-      this.router.navigateByUrl('auth/sign-in');
     } else {
       this.ngOnInit();
       this._snackBar.open("Error while confirming password", "cancel");
