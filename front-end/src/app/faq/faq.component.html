@@ -4,17 +4,17 @@
 
     
         <h2>
-            Réponses aux questions fréquemment posées
+            Frequently Asked Questions : <br> Looking for infomations ? We may have the answers here !
         </h2>
 
 
         <mat-card class="container2" >
         <br>
 
-        <label for="category-select">Please choose a category : </label>
+        <div class="select"> Please choose a category : </div>
         <br><br>
 
-        <form [formGroup]="coordinatesForm">
+        <div class="select"> <form [formGroup]="coordinatesForm">
             <mat-form-field appearance="fill">
 
                 <mat-label>Category</mat-label>
@@ -27,21 +27,36 @@
             <br>
             <br>
         </form>
+        </div>
 
         <br><br>
         
+        <div class="select">
         <button mat-raised-button color="primary" [disabled]="this.coordinatesForm.invalid" (click)="this.onSubmit()">
             <mat-icon aria-hidden="false" aria-label="Example search icon">search</mat-icon>
             Search
         </button>
+        </div>
         <br><br>
     </mat-card>
 
     <div *ngIf="!this.hideForm()">      
         <br><br>
-            <div class="center">
-                    <h3>{{ this.nameInformations }}</h3>
-                    <p>{{ this.informations }}</p>
+            <h3>{{ this.nameInformations }}</h3>
+            <div class="center" *ngIf="this.nameInformations === 'About this website'">
+                    <app-about-website></app-about-website>
+                    <br>
+            </div>
+            <div class="center" *ngIf="this.nameInformations === 'Covid Informations'">
+                    <app-about-covid></app-about-covid>
+                    <br>
+            </div>
+            <div class="center" *ngIf="this.nameInformations === 'Vaccines Informations'">
+                    <app-about-vaccine></app-about-vaccine>
+                    <br>
+            </div>
+            <div class="center" *ngIf="this.nameInformations === 'Others'">
+                    <app-others></app-others>
                     <br>
             </div>
 

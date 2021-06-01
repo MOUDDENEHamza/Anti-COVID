@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CATEGORY } from './category-list';
+import { AboutWebsiteComponent } from './about-website/about-website.component';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class FaqComponent implements OnInit {
   coordinatesForm: FormGroup;
   categoryList = CATEGORY;
   nameInformations : any;
-  informations : any;
+
+  component = AboutWebsiteComponent;
 
 
   constructor() { }
@@ -25,28 +27,14 @@ export class FaqComponent implements OnInit {
     this.coordinatesForm = new FormGroup({
       category: new FormControl('', [Validators.required]),
     });
-    this.coordinatesForm.get('category').valueChanges.subscribe(category => {
-      this.coordinatesForm.get('infos').enable()
-   });
   }
 
   onSubmit(): void {
     this.nameInformations = this.coordinatesForm.get('category').value.name;
-    this.informations = this.coordinatesForm.get('category').value.infos;
     this.hide = false;
-  }
-
-  hideContent() : boolean {
-    console.log(this.informations)
-    return this.informations === 'default';
   }
 
   hideForm(): boolean {
     return this.hide;
   }
-
-  getInfo() : any {
-    return this.informations;
-  } 
-
 }
