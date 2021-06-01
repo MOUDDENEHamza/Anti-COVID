@@ -1,1 +1,59 @@
-<p>faq works!</p>
+<div class="wrapper">
+    <div class="container">
+        <h1>{{ this.title }}</h1>
+
+    
+        <h2>
+            Réponses aux questions fréquemment posées
+        </h2>
+
+
+        <mat-card class="container2" >
+        <br>
+
+        <label for="category-select">Please choose a category : </label>
+        <br><br>
+
+        <form [formGroup]="coordinatesForm">
+            <mat-form-field appearance="fill">
+
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category" required>
+                <mat-option *ngFor="let category of categoryList" [value]="category">
+                    {{category.name}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <br>
+        </form>
+
+        <br><br>
+        
+        <button mat-raised-button color="primary" [disabled]="this.coordinatesForm.invalid" (click)="this.onSubmit()">
+            <mat-icon aria-hidden="false" aria-label="Example search icon">search</mat-icon>
+            Search
+        </button>
+        <br><br>
+    </mat-card>
+
+    <div *ngIf="!this.hideForm()">      
+        <br><br>
+            <div class="center">
+                    <h3>{{ this.nameInformations }}</h3>
+                    <p>{{ this.informations }}</p>
+                    <br>
+            </div>
+
+
+
+        </div>
+
+
+        <br><br>
+        <br><br>
+        <br><br>
+
+    </div>
+
+</div>
