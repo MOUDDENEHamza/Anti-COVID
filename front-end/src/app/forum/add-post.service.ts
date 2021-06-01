@@ -77,7 +77,11 @@ export class AddPostService {
   public addComment(postId : number, author: string, date: string, content: string) {
     const headers = {'content-type': 'application/json'}  
     const body = JSON.stringify(new comment(author, date, content));
+<<<<<<< HEAD
     return this.http.put(this.baseURL + 'post_id=' + postId + '/add_comment', body ,{'headers': headers}).pipe(
+=======
+    return this.http.put(this.baseURL + 'post_id=' + postId +'/add_comment', body ,{'headers': headers}).pipe(
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
       catchError(this.handleError)
     );
   }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DataService } from '../data.service';
@@ -13,18 +13,22 @@ import { REGIONS } from './region-list';
 export class VaccinComponent implements OnInit, OnDestroy {
 
   title = 'Vaccin';
-  downloadDone = true;
+  downloadDone = false;
   informations: any = [];
-  data : any = [];
-  hide = true;
   coordinatesForm: FormGroup;
   regionList = REGIONS;
   item : any;
   subscription : Subscription;
 
-  constructor(private http: HttpClient,
-              private sharedData : DataService) {
-    this.subscription = this.sharedData.currentId.subscribe(item => this.item = item);
+  constructor(private http: HttpClient) {
+    this.http.get('http://localhost:8080/AntiCOVID/rest/vaccination_center', { responseType: "json" }).subscribe(
+      data => {
+        this.informations = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -50,44 +54,27 @@ export class VaccinComponent implements OnInit, OnDestroy {
     return this.hide;
   }
 
-  extractZipCode(department : string) : number {
-    const list = department.split(' ');
-    var result = (+list[list.length - 1].substring(1, 3)) * 1000;
-    return result;
+  hideContent() : boolean {
+    if (this.informations.length === 2228) {
+      this.downloadDone = true;
+    }
+    return this.downloadDone;
   }
 
-  zeroPad(num, places) {
-    var zero = places - num.toString().length + 1;
-    return Array(+(zero > 0 && zero)).join("0") + num;
+  hideForm(): boolean {
+    return false;
   }
 
   onSubmit(): void {
-    if (this.coordinatesForm.get('region').value.name === 'CORSE') {
-      this.http.get('http://localhost:8080/AntiCOVID/rest/vaccination_center/region=' + this.coordinatesForm.get('region').value.name,{ responseType: "json" }).subscribe(
-        data => {
-          this.informations = data;
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    } else {
-      this.http.get('http://localhost:8080/AntiCOVID/rest/vaccination_center/region=' + this.coordinatesForm.get('region').value.name +
-    '&zipCode=' + this.extractZipCode(this.coordinatesForm.get('department').value), { responseType: "json" }).subscribe(
-        data => {
-          this.informations = data;
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
-    this.hide = !this.hide;
-  }
-
-  onFilter() : void {
-    this.ngOnInit();
-    this.hide = !this.hide;
+    this.http.get('http://localhost:8080/AntiCOVID/rest/vaccination_center', { responseType: "json" }).subscribe(
+      data => {
+        console.log(data);
+        this.informations = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }

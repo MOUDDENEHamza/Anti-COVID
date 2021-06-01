@@ -5,9 +5,12 @@ import { AddPostService } from './add-post.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatDialog } from '@angular/material/dialog';
 import { CommentComponent } from './comment/comment.component';
+<<<<<<< HEAD
 import { Subscription } from 'rxjs';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
+=======
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
 
 @Component({
   selector: 'app-forum',
@@ -22,6 +25,7 @@ export class ForumComponent implements OnInit {
   likesColor : string[] = [];
   @ViewChild(MatAccordion) accordion: MatAccordion;
   open = false;
+<<<<<<< HEAD
   id : number;
   subscription : Subscription;
   todayISOString : string = new Date().toISOString();
@@ -58,6 +62,21 @@ export class ForumComponent implements OnInit {
     } else {
       this.router.navigateByUrl('auth/sign-in');
     }
+=======
+
+  constructor(private addPostService: AddPostService, private http: HttpClient, public dialog: MatDialog) {
+    this.http.get('http://localhost:8080/AntiCOVID/rest/get_posts_list', { responseType: "json" }).subscribe(
+      data => {
+        this.posts = data;
+        for (var i = 0; i < this.posts.length; i++) {
+          this.likesColor.push('');
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
   }
 
   ngOnInit () : void {
@@ -69,10 +88,13 @@ export class ForumComponent implements OnInit {
     });
   }
 
+<<<<<<< HEAD
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
+=======
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
   getErrorMessage() {
     if (this.postForm.get('title').hasError('required')
       || this.postForm.get('content').hasError('required')) {
@@ -103,9 +125,13 @@ export class ForumComponent implements OnInit {
   }
 
   onComment (post) : void {
+<<<<<<< HEAD
     this.dialog.open(CommentComponent, {data: post}).afterClosed().subscribe(result => {
       location.reload();
     });
+=======
+    this.dialog.open(CommentComponent, {data: post});
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
   }
 
 }

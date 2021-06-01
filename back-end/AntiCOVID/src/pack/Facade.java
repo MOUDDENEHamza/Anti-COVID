@@ -18,8 +18,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+<<<<<<< HEAD
 import javax.ws.rs.core.Response;
 
+=======
+import javax.ws.rs.core.MediaType;
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
 
 @Singleton
 @Path("/")
@@ -299,7 +303,50 @@ public class Facade {
 	public Collection<VaccinationCenter> getVaccin() {
 		return em.createQuery("FROM VaccinationCenter", VaccinationCenter.class).getResultList();
 	}
+	/*************************************************************************/
 	
+	/*************************************************************************/
+	/*									FORUM								 */
+	/*************************************************************************/
+	@GET
+	@Path("/get_posts_list")
+	@Produces({"application/json"})
+	public Collection<Post> getPostsList() {
+		return em.createQuery("FROM Post", Post.class).getResultList();
+	}
+	
+	@POST
+	@Path("/add_post")
+	@Consumes({"application/json"})
+	public void addPost(Post post) {
+		em.persist(post);
+	}
+	
+	@PUT
+	@Path("/post_id={id}/add_comment")
+	@Consumes({"application/json"})
+	public void addComment(@PathParam("id") String id, Comment comment) {
+		if (comment == null) {
+			System.out.println("Comment null");
+		} else {
+			em.persist(comment);
+			Post post = em.find(Post.class, Float.valueOf(id).intValue());
+			post.getComments().add(comment);
+			em.merge(post);
+		}
+	}
+	
+	@DELETE
+	@Path("/delete_posts_list")
+	public void deletePostsList() {
+		Collection<Post> l = em.createQuery("FROM Post", Post.class).getResultList();
+		for (Post p : l) {
+			em.remove(p);
+		}
+	}
+	/*************************************************************************/
+	
+<<<<<<< HEAD
 	/**
 	 * Get VaccinationCenter by region
 	 * @param region we are looking for
@@ -388,6 +435,44 @@ public class Facade {
 		
 	}
 	/*************************************************************************/
+=======
+	@GET
+	@Path("/get_users_list")
+	@Produces({"application/json"})
+	public Collection<User> getUsersList() {
+		return em.createQuery("FROM User", User.class).getResultList();
+	}
+	
+	@GET
+	@Path("/get_user_by_email")
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({"application/json"})
+	public User getUserByEmail(String email) {
+		User user = null;
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email")
+		.setParameter("email", email);
+		try {
+			user = (User) query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println("This user does not exist.");
+			return null;
+		}
+		return user;	
+	}
+	
+	@POST
+	@Path("/add_user")
+	@Consumes({"application/json"})
+	public void addUser(User user) {
+		em.persist(user);
+	}
+	
+	@DELETE
+	@Path("/delete_users_list")
+	public void deleteUsersList() {
+		em.createQuery("DELETE FROM User");
+	}
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
 	/*************************************************************************/
 	/*									FORUM								 */
 	/*************************************************************************/

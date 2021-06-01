@@ -17,8 +17,11 @@
         <class>pack.User</class>
         <class>pack.Post</class>
         <class>pack.Comment</class>
+<<<<<<< HEAD
         <class>pack.Overview</class>
         <class>pack.TestCenter</class>
+=======
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
         
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />

@@ -9,8 +9,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+<<<<<<< HEAD
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
+=======
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
 
 import { VaccinRoutingModule } from './vaccin-routing.module';
 import { VaccinComponent } from './vaccin.component';
@@ -28,9 +31,13 @@ import { VaccinComponent } from './vaccin.component';
     MatButtonModule,
     MatIconModule,
     MatListModule,
+<<<<<<< HEAD
     MatDividerModule,
     MatGridListModule,
     MatPaginatorModule
+=======
+    MatDividerModule
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
   ]
 })
 export class VaccinModule { }

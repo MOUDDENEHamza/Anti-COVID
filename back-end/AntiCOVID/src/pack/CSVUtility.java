@@ -22,7 +22,11 @@ public class CSVUtility {
 		}
 		int first = index;
 		while (index < tmp.length) {
+<<<<<<< HEAD
 			if (first == index && (tmp[index].equals("DE") || tmp[index].equals("DU"))) {
+=======
+			if (first == index && tmp[index].equals("DE")) {
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
 				
 			} else {
 				if (index == tmp.length - 1) {
@@ -97,6 +101,7 @@ public class CSVUtility {
 		        	}
 		        	
 		        	records.add(item);
+<<<<<<< HEAD
 	        	}
 		    }
 		}
@@ -125,6 +130,8 @@ public class CSVUtility {
 		        	item.add(values[10]);  							// mod_prel 		4
 		        	item.add(values[15]); 							// tel_rdv			5
 		        	records.add(item);
+=======
+>>>>>>> 03b4d0bc364d634257be7afd39b527d792652472
 	        	}
 		    }
 		}

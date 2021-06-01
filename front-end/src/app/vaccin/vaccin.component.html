@@ -1,15 +1,17 @@
-<div class="splash-screen" *ngIf="false">
+<div class="splash-screen" *ngIf="!this.hideContent()">
     Loading
     <span class="d">.</span>
     <span class="d d-2">.</span>
     <span class="d d-3">.</span>
 </div>
 
-<div class="wrapper">
-    <h1>{{ this.title }}</h1>
+<div class="wrapper" *ngIf="this.hideContent()">
 
+    <h1>{{ this.title }}</h1>
+    
     <mat-card class="container" *ngIf="this.hideForm()">
-        
+        <h1>Vaccin</h1>
+        <br><br>
         <form [formGroup]="coordinatesForm">
             <mat-form-field appearance="fill">
                 <mat-label>Region</mat-label>
@@ -33,7 +35,6 @@
         </form>
 
         <br><br>
-        
         <button mat-raised-button color="primary" [disabled]="this.coordinatesForm.invalid" (click)="this.onSubmit()">
             <mat-icon aria-hidden="false" aria-label="Example search icon">search</mat-icon>
             Search
@@ -41,50 +42,36 @@
         <br><br>
     </mat-card>
     
-    
-    <div  *ngIf="!this.hideForm()">
-
-        <div class="filter">
-            <button mat-raised-button color="accent" (click)="this.onFilter()">
-                <mat-icon aria-hidden="false" aria-label="Example filter_list icon">filter_list</mat-icon>
-                Filter
-            </button>
-        </div>
-        
-        <br><br>
-
-        <mat-grid-list cols="3" rowHeight="1.5:1">
-            <mat-grid-tile *ngFor="let item of this.informations">
-                <div class="center">
+    <ul *ngIf="!this.hideForm()">    
+        <li *ngFor="let item of this.informations">
+            <mat-card class="center">      
+                <mat-card-content>
                     <h2>{{ item.name }}</h2>
                     <mat-divider></mat-divider>
                     <br>
-                    
-                    <div>
-                        <mat-icon aria-hidden="false" aria-label="Example place icon">place</mat-icon>
-                        <br>    
-                        <div *ngIf="item.address.number !== '' && item.address.street !== ''">
-                            {{ item.address.number }} {{ item.address.street }}<br>
-                        </div>
-                        {{ zeroPad(item.address.zipCode, 5) }} {{ item.address.city }}<br>
-                        {{ item.address.region }}
-                    </div>
-                    
+                    <mat-icon aria-hidden="false" aria-label="Example place icon">place</mat-icon>
                     <br>
-
-                    <div *ngIf="item.appointment.phoneNumber !== null && (item.appointment.phoneNumber).length >= 4" >
+                    <div *ngIf="item.address.number !== '' && item.address.street !== ''">
+                        {{ item.address.number }} {{ item.address.street }}<br>
+                    </div>
+                    {{ item.address.zipCode }} {{ item.address.city }}<br>
+                    {{ item.address.region }}
+                    <div *ngIf="item.appointment.phoneNumber !== ''">
+                        <br>
                         <mat-icon aria-hidden="false" aria-label="Example phone icon">phone</mat-icon>
                         <br>
                         {{ item.appointment.phoneNumber }}
                     </div>
-                    <br>
-                    
-                    <a mat-raised-button href="{{ item.appointment.webSite }}" target="_blank" color="accent" *ngIf="item.appointment.webSite !== null">
+                </mat-card-content>
+        
+                <mat-card-actions>
+                    <a mat-raised-button href="{{ item.appointment.webSite }}" target="_blank" color="accent">
                         <mat-icon aria-hidden="false" aria-label="Example schedule icon">schedule</mat-icon>
                         Make an appointement
                     </a>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list> 
-    </div>
+                </mat-card-actions>
+            </mat-card>        
+        </li>    
+    </ul>
+
 </div>
