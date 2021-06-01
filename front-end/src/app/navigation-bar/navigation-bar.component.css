@@ -1,0 +1,14 @@
+.navbar {
+  background-color: white;
+  top: 0;
+}
+
+a {
+  color: black;
+}
+
+.right {
+  padding-right: 20px;
+  position:absolute;
+  right:0;
+}

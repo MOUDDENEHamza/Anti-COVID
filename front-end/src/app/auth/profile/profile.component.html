@@ -1,0 +1,70 @@
+<div class="wrapper">
+    <div>
+        
+        <h1>{{ this.title }}</h1>
+
+        <img src="../../assets/avatar.png" alt="Avatar" class="avatar">
+        
+        <form [formGroup]="this.userForm">
+        
+            <mat-form-field appearance="outline">
+                <mat-label>First name</mat-label> 
+                <input matInput placeholder="Marine" formControlName="firstName" required>
+                <mat-error *ngIf="this.userForm.get('firstName').invalid">{{ getErrorMessage('firstName') }}</mat-error>
+            </mat-form-field>
+         
+            <br>
+            
+            <mat-form-field appearance="outline">
+                <mat-label>Last name</mat-label>
+                <input matInput placeholder="Dupont" formControlName="lastName" required>
+                <mat-error *ngIf="this.userForm.get('lastName').invalid">{{ getErrorMessage('lastName') }}</mat-error>
+            </mat-form-field>
+    
+            <br>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="xyz@gmail.com" formControlName="email" required>
+                <mat-error *ngIf="this.userForm.get('email').invalid">{{ getErrorMessage('email') }}</mat-error>
+            </mat-form-field>
+            
+            <br>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="this.userForm.get('password').invalid">{{ getErrorMessage('password') }}</mat-error>
+            </mat-form-field>
+
+        </form>
+        
+        <div class="button-container">
+            <button mat-button [disabled]="!enable()" (click)="onEdit()" color="primary">
+                <mat-icon aria-hidden="false" aria-label="Example edit icon">edit</mat-icon>
+                EDIT PROFILE
+            </button>
+            <button mat-button [disabled]="enable()" (click)="onSave()">
+                <mat-icon aria-hidden="false" aria-label="Example save icon">save</mat-icon>
+                SAVE
+            </button>
+            <button mat-button (click)="onLogOut()" color="warn">
+                <mat-icon aria-hidden="false" aria-label="Example logout icon">logout</mat-icon>
+                LOG OUT
+            </button>
+        </div>
+        
+        <br>
+
+        <button mat-button (click)="onDelete()" class="delete-button" color="accent">
+            <mat-icon aria-hidden="false" aria-label="Example delete icon">delete</mat-icon>
+            DELETE ACCOUNT
+        </button>
+
+        
+    </div>
+       
+</div>

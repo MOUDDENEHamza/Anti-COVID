@@ -1,0 +1,9 @@
+.footer {
+  background-color: white;
+  bottom: 0;
+  position: sticky;
+}
+
+.text {
+  margin: 0 auto;
+}
