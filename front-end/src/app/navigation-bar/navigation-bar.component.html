@@ -2,7 +2,7 @@
   <mat-toolbar-row>
     <div>
 
-      <div *ngIf="this.item === 'default'">
+      <div *ngIf="this.id === 0">
         <a mat-button routerLink="home">
           <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
           {{ this.title }}
@@ -11,17 +11,13 @@
           <mat-icon aria-hidden="false" aria-label="Example assessment icon">assessment</mat-icon>
           Covid overview
         </a>
-        <a mat-button routerLink="faq">
-          <mat-icon aria-hidden="false" aria-label="Example feedback icon">feedback</mat-icon>
-          FAQ
-        </a>
         <a mat-button routerLink="contact">
           <mat-icon aria-hidden="false" aria-label="Example contact_support icon">contact_support</mat-icon>
           Contact
         </a>
       </div>
 
-      <div *ngIf="this.item !== 'default'">
+      <div *ngIf="this.id !== 0">
         <a mat-button routerLink="home">
           <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
           {{ this.title }}
@@ -38,10 +34,6 @@
           <mat-icon aria-hidden="false" aria-label="Example forum icon">forum</mat-icon>
           Forum
         </a>
-        <a mat-button routerLink="faq">
-          <mat-icon aria-hidden="false" aria-label="Example feedback icon">feedback</mat-icon>
-          FAQ
-        </a>
         <a mat-button routerLink="contact">
           <mat-icon aria-hidden="false" aria-label="Example contact_support icon">contact_support</mat-icon>
           Contact
@@ -52,18 +44,16 @@
 
     <div class="right">
 
-      <div *ngIf="this.item !== 'default'">
+      <div *ngIf="this.id !== 0">
         <a mat-button routerLink="auth/profile">
           <mat-icon aria-hidden="false" aria-label="Example account_circle icon">account_circle</mat-icon>
-          {{ this.item.firstName }}
         </a>
 
         <a mat-button routerLink="auth/sign-in" (click)="onLogOut()">
           <mat-icon aria-hidden="false" aria-label="Example logout icon">logout</mat-icon>
-          Log out
         </a>
       </div>
-      <div *ngIf="this.item === 'default'">
+      <div *ngIf="this.id === 0">
         <a mat-button routerLink="auth/sign-in">
           <mat-icon aria-hidden="false" aria-label="Example login icon">login</mat-icon>
           Sign in
@@ -78,4 +68,3 @@
 
   </mat-toolbar-row>
 </mat-toolbar>
-

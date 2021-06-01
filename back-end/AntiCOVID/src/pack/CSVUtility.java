@@ -102,5 +102,33 @@ public class CSVUtility {
 		}
 		return records;
 	}
+	
+	/**
+	 * Parse a CSV file and extract vaccin center data stored on centres-vaccination.csv
+	 * @throws FileNotFoundException 
+	 * @throws CsvException 
+	 * @throws IOException 
+	 */
+	public static List<List<String>> parseCSVTestFile() throws FileNotFoundException, IOException {
+		String fileName = "/home/hamza/Desktop/Anti-COVID/back-end/AntiCOVID/data/sites-prelevements-grand-public.csv";
+		List<List<String>> records = new ArrayList<>();
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+		    String line;
+		    while ((line = br.readLine()) != null) {
+		        String[] values = line.split(",");
+		        List<String> item = new ArrayList<>();
+	        	if (!values[1].equals("nom")) {
+			        item.add(values[3]);  							// rs				0
+		        	item.add(values[4]);  							// adresse			1
+		        	item.add(values[6]);  							// do_prel			2
+		        	item.add(values[7]);  							// do_antigenic 	3
+		        	item.add(values[10]);  							// mod_prel 		4
+		        	item.add(values[15]); 							// tel_rdv			5
+		        	records.add(item);
+	        	}
+		    }
+		}
+		return records;
+	}
 
 }

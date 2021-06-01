@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, SystemJsNgModuleLoader } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/data.service';
 import { FailedEditProfileComponent } from '../failed-edit-profile/failed-edit-profile.component';
@@ -41,41 +41,55 @@ export class ProfileComponent implements OnInit,OnDestroy {
   notEditing = true;
   user : any;
   ok : boolean;
-  item : any;
   subscription : Subscription;
+  id : number;
+  firstName : string;
+  lastName : string;
+  email : string;
+  password : string;
   
   constructor(private http : HttpClient,
-              private route : ActivatedRoute,
               private userService : UserService,
               public dialog : MatDialog,
               private router : Router,
               private data : DataService) {
-    this.user = JSON.parse((this.route.snapshot.paramMap.get('data')));
-    this.data.changeMessage(this.user);
+    this.subscription = this.data.currentId.subscribe(id => this.id = id);
+    this.data.changeMessage(this.id);
+    this.http.get('http://localhost:8080/AntiCOVID/rest/get_user/id=' + this.id,
+      { responseType: "json" }).subscribe(
+      data => {
+        this.firstName = JSON.parse(JSON.stringify(data)).firstName;
+        this.lastName = JSON.parse(JSON.stringify(data)).lastName;
+        this.email = JSON.parse(JSON.stringify(data)).email;
+        this.password = JSON.parse(JSON.stringify(data)).password;
+      },
+      error => {
+        this.router.navigateByUrl('auth/sign-in');
+      }
+    );
   }
 
   ngOnInit(): void {
     this.userForm = new FormGroup({
       firstName: new FormControl(
-        {value : this.user.firstName, disabled: this.notEditing},
+        {value : this.firstName, disabled: this.notEditing},
         [Validators.required]
       ),
       lastName: new FormControl(
-        {value : this.user.lastName, disabled: this.notEditing},
+        {value : this.lastName, disabled: this.notEditing},
         [Validators.required]
       ),
       email: new FormControl(
-        {value : this.user.email, disabled: this.notEditing},
+        {value : this.email, disabled: this.notEditing},
         [Validators.required, Validators.email]
       ),
       password: new FormControl(
-        {value : this.user.password, disabled: this.notEditing}, 
+        {value : this.password, disabled: this.notEditing}, 
         [
           Validators.required,
           Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}')
         ])
     });
-    this.subscription = this.data.currentItem.subscribe(item => this.item = item)
   }
 
   ngOnDestroy() {
@@ -106,7 +120,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
 
   onSave () : void {
     this.notEditing = !this.notEditing;
-    this.user = new User(this.user.id, this.userForm.get('firstName').value, this.userForm.get('lastName').value,
+    this.user = new User(this.id, this.userForm.get('firstName').value, this.userForm.get('lastName').value,
     this.userForm.get('email').value, this.userForm.get('password').value);
     this.userService.updateUser(this.user).subscribe(
       data => {

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from '../data.service';
@@ -10,21 +11,22 @@ import { DataService } from '../data.service';
 export class NavigationBarComponent implements OnInit {
 
   @Input('title') title : string;
-  item : any;
   subscription : Subscription;
+  id : number;
+  firstName : string;
 
-  constructor(private data : DataService) { }
-
-  ngOnInit() {
-    this.subscription = this.data.currentItem.subscribe(item => this.item = item);
+  constructor(private data : DataService) {
+    this.subscription = this.data.currentId.subscribe(id => this.id = id);
   }
 
-  ngOnDestroy() {
+  ngOnInit() : void { }
+
+  ngOnDestroy() : void {
     this.subscription.unsubscribe();
   }
 
   onLogOut() : void {
-    this.data.changeMessage('default');
+    this.data.changeMessage(0);
   }
 
 }

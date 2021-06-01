@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CommentComponent } from './comment/comment.component';
 import { Subscription } from 'rxjs';
 import { DataService } from '../data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forum',
@@ -21,25 +22,42 @@ export class ForumComponent implements OnInit {
   likesColor : string[] = [];
   @ViewChild(MatAccordion) accordion: MatAccordion;
   open = false;
-  item : any;
+  id : number;
   subscription : Subscription;
   todayISOString : string = new Date().toISOString();
+  name : string;
 
   constructor(private addPostService: AddPostService,
               private http: HttpClient,
               public dialog: MatDialog,
+              private router : Router,
               private data : DataService) {
-      this.http.get('http://localhost:8080/AntiCOVID/rest/get_posts_list', { responseType: "json" }).subscribe(
-      data => {
-        this.posts = data;
-        for (var i = 0; i < this.posts.length; i++) {
-          this.likesColor.push('');
+    this.subscription = this.data.currentId.subscribe(id => this.id = id);
+    if (this.id !== 0) {
+      this.http.get('http://localhost:8080/AntiCOVID/rest/get_name/id=' + this.id,
+      { responseType: "json" }).subscribe(
+        data => {
+        },
+        error => {
+          if (error.status === 200) {
+            this.name = error.error.text;
+          }
         }
-      },
-      error => {
-        console.log(error);
-      }
-    );
+      );
+      this.http.get('http://localhost:8080/AntiCOVID/rest/get_posts_list', { responseType: "json" }).subscribe(
+        data => {
+          this.posts = data;
+          for (var i = 0; i < this.posts.length; i++) {
+            this.likesColor.push('');
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.router.navigateByUrl('auth/sign-in');
+    }
   }
 
   ngOnInit () : void {
@@ -49,7 +67,6 @@ export class ForumComponent implements OnInit {
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required])
     });
-    this.subscription = this.data.currentItem.subscribe(item => this.item = item);
   }
 
   ngOnDestroy() {

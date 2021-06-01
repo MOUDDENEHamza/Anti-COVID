@@ -15,7 +15,7 @@
          
             <br>
             
-            <mat-form-field appearance="outline" class="meduimField">
+            <mat-form-field appearance="outline">
                 <mat-label>Last name</mat-label>
                 <input matInput placeholder="Dupont" formControlName="lastName" required>
                 <mat-error *ngIf="this.userForm.get('lastName').invalid">{{ getErrorMessage('lastName') }}</mat-error>

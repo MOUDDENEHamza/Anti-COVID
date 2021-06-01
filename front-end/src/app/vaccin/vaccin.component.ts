@@ -24,7 +24,7 @@ export class VaccinComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient,
               private sharedData : DataService) {
-    this.subscription = this.sharedData.currentItem.subscribe(item => this.item = item);
+    this.subscription = this.sharedData.currentId.subscribe(item => this.item = item);
   }
 
   ngOnInit(): void {

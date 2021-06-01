@@ -9,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class NewCasesComponent implements OnInit {
   
   data: any[];
-  view: any[] = [1000, 400];
+  view: any[] = [600, 400];
 
   // options
-  legend: boolean = true;
+  legend: boolean = false;
   showLabels: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;
@@ -39,8 +39,7 @@ export class NewCasesComponent implements OnInit {
     
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onSelect(data): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));

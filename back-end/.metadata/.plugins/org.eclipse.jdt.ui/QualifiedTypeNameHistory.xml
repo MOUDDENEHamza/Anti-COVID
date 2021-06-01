@@ -5,8 +5,6 @@
     <fullyQualifiedTypeName name="javax.ws.rs.core.MediaType"/>
     <fullyQualifiedTypeName name="javax.persistence.Query"/>
     <fullyQualifiedTypeName name="javax.persistence.NoResultException"/>
-    <fullyQualifiedTypeName name="javax.persistence.Entity"/>
-    <fullyQualifiedTypeName name="java.io.Serializable"/>
     <fullyQualifiedTypeName name="javax.ws.rs.DELETE"/>
     <fullyQualifiedTypeName name="java.util.Collection"/>
     <fullyQualifiedTypeName name="javax.ws.rs.PUT"/>
@@ -15,4 +13,6 @@
     <fullyQualifiedTypeName name="exception.ExistingUserException"/>
     <fullyQualifiedTypeName name="javax.ws.rs.core.Response"/>
     <fullyQualifiedTypeName name="javax.ws.rs.core.Response.Status"/>
+    <fullyQualifiedTypeName name="javax.persistence.Entity"/>
+    <fullyQualifiedTypeName name="java.io.Serializable"/>
 </qualifiedTypeNameHistroy>

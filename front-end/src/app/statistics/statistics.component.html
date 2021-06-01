@@ -3,13 +3,19 @@
         <h1>{{ this.title }}</h1>
         <app-today-overview></app-today-overview>
         <br><br>
-        <app-new-cases></app-new-cases>
-        <br><br>
-        <app-total-cases></app-total-cases>
-        <br><br>
-        <app-recovered></app-recovered>
-        <br><br>
-        <app-death></app-death>
-        <br><br>
+
+        <div class="block">
+            <app-new-cases></app-new-cases>
+        </div>
+        <div class="block">
+            <app-total-cases></app-total-cases>
+        </div>
+        
+        <div class="block">
+            <app-recovered></app-recovered>
+        </div>
+        <div class="block">
+            <app-death></app-death>
+        </div>
     </div>
 </div>

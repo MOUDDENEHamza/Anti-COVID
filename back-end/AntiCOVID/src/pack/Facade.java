@@ -339,6 +339,56 @@ public class Facade {
 	/*************************************************************************/
 	
 	/*************************************************************************/
+	/*									TEST								 */
+	/*************************************************************************/
+	/**
+	 *  Update the database with the current data of TestCenter
+	 */
+	@POST
+	@Path("/test_center")
+	public Response updateTestCenter() {
+		try {
+			List<List<String>> records = CSVUtility.parseCSVTestFile();
+			for (int i = 0; i < records.size(); i++) {
+				TestCenter tc = new TestCenter();
+				tc.setName(records.get(i).get(0));
+				tc.setLocalisation(records.get(i).get(1));
+				if (records.get(i).get(2).equals("OUI")) {
+					tc.setPcr(1);
+				} else {
+					tc.setPcr(0);
+				}
+				if (records.get(i).get(3).equals("OUI")) {
+					tc.setAntigenic(1);
+				} else {
+					tc.setAntigenic(0);
+				}
+				tc.setMode(records.get(i).get(4));
+				tc.setPhone(records.get(i).get(5));
+				em.persist(tc);
+			}
+		} catch (IOException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERROR : Something wrong happend\n").build();
+		}
+		return Response.status(Response.Status.OK).entity("Database initialized with success").build();
+	}
+	
+	/**
+	 * Get TestCenters data
+	 * @return a collection of VaccinationCenter
+	 */
+	@SuppressWarnings("unchecked")
+	@GET
+	@Path("/test_center")
+	@Produces({"application/json"})
+	public Response getTestCenter() {
+		Query query = em.createQuery("FROM VaccinationCenter", VaccinationCenter.class);
+		List<TestCenter> list = query.getResultList();
+		return Response.status(Response.Status.OK).entity(list).build();
+		
+	}
+	/*************************************************************************/
+	/*************************************************************************/
 	/*									FORUM								 */
 	/*************************************************************************/
 	/**
@@ -432,6 +482,40 @@ public class Facade {
 	}
 	
 	/**
+	 * Get user by a given id from database
+	 * @param id of the user we are looking for
+	 * @return NOT_FOUND response if the user doesn't exist, otherwise OK
+	 * response will be returned
+	 */
+	@GET
+	@Path("/get_user/id={id}")
+	@Produces({"application/json"})
+	public Response getUserByID(@PathParam("id") int id) {
+		User user = em.find(User.class, id);
+		if (user == null) {
+			return Response.status(Response.Status.NOT_FOUND).entity("ERROR : User doesn't exist\n").build();
+		}
+		return Response.status(Response.Status.OK).entity(user).build();
+	}
+	
+	/**
+	 * Get first name of user by a given id from database
+	 * @param id of the user we are looking for
+	 * @return NOT_FOUND response if the user doesn't exist, otherwise OK
+	 * response will be returned
+	 */
+	@GET
+	@Path("/get_name/id={id}")
+	@Produces({"application/json"})
+	public Response getNameByID(@PathParam("id") int id) {
+		User user = em.find(User.class, id);
+		if (user == null) {
+			return Response.status(Response.Status.NOT_FOUND).entity("ERROR : User doesn't exist\n").build();
+		}
+		return Response.status(Response.Status.OK).entity(user.getFirstName() + " " + user.getLastName()).build();
+	} 
+	
+	/**
 	 * Add a new user to the database
 	 * @param user we want to add
 	 * @return OK response if the user doesn't exist, otherwise
@@ -466,12 +550,21 @@ public class Facade {
 		if (u == null) {
 			return Response.status(Response.Status.NOT_FOUND).entity("ERROR : User doesn't exist\n").build();
 		}
-		Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.firstName = :firstName AND u.lastName = :lastName AND u.email = :email AND u.password = :password")
+				.setParameter("firstName", user.getFirstName())
+				.setParameter("lastName", user.getLastName())
+				.setParameter("email", user.getEmail())
+				.setParameter("password", user.getPassword());
+		if (!query.getResultList().isEmpty()) {
+			return Response.status(Response.Status.OK).entity("No changes\n").build();
+		}
+		query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
 				.setParameter("email", user.getEmail())
 				.setParameter("password", user.getPassword());
 		if (!query.getResultList().isEmpty()) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERROR : User already exists\n").build();
-		} 
+		}
+		
 		em.merge(user);
 		return Response.status(Response.Status.OK).entity("User has been updated with success\n").build();
 	}

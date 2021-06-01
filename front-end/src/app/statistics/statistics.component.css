@@ -5,7 +5,7 @@
 }
 
 .container {
-  width: 60%;
+  width: 90%;
   margin: auto;
   text-align: center;
 }
@@ -18,10 +18,7 @@ h1 {
   text-align: center;
 }
 
-h2 {
-  font-size: 28px;
-  font-weight: 300;
-  line-height: 28px;
-  margin: 15px 0 25px;
-  text-align: center;
+.block {
+  display: inline-block;
+  margin: 2%;
 }

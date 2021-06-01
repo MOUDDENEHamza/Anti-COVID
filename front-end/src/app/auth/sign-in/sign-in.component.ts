@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/data.service';
 import { FailedSignInComponent } from '../failed-sign-in/failed-sign-in.component';
 
 @Component({
@@ -14,20 +15,26 @@ import { FailedSignInComponent } from '../failed-sign-in/failed-sign-in.componen
 export class SignInComponent implements OnInit {
 
   title = 'Sign in';
-  userForm: FormGroup;
+  userForm : FormGroup;
   hide = true;
-  message:string;
-  subscription: Subscription;
+  id : number;
+  subscription : Subscription;
 
   constructor(private http: HttpClient,
               private router : Router,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private data : DataService) { }
 
   ngOnInit(): void {
     this.userForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
     });
+    this.subscription = this.data.currentId.subscribe(id => this.id = id)
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   /**
@@ -50,7 +57,8 @@ export class SignInComponent implements OnInit {
     '&password=' + this.userForm.get('password').value,{ responseType: "json" }).subscribe(
       data => {
         this.ngOnInit();
-        this.router.navigate(['auth/profile', {data : JSON.stringify(data)}]);
+        this.data.changeMessage(JSON.parse(JSON.stringify(data)).id);
+        this.router.navigateByUrl('auth/profile');
       },
       error => {
         if (error.status >= 400) {

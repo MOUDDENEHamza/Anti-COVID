@@ -1,4 +1,7 @@
-mat-grid-list {
+.block {
+    width: 40%;
+    padding: 2%;
+    margin: auto;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -9,6 +12,12 @@ h1 {
     font-weight: 500;
     line-height: 1.1;
     letter-spacing: 1.25px;
+}
+
+.item {
+    display: inline-block;
+    padding: 2%;
+    margin: 2%;
 }
 
 h2 {
