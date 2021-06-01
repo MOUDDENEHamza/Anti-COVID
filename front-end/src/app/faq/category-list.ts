@@ -6,20 +6,20 @@ export interface Category {
 
 export const CATEGORY: Category[] = [
     {
-        name: 'Fonctionnement du site',
+        name: 'About this website',
         infos: 'blablabla sur le Fonctionnement du site',
     },
     {
-        name: 'Informations covid',
+        name: 'Covid Informations',
         infos: 'blabla sur les Informations covid',
     },
     {
-        name: 'Informations vaccins',
+        name: 'Vaccines Informations',
         infos: 'blabla sur les Informations vaccins',
 
     },
     {
-        name: 'Autre',
+        name: 'Others',
         infos: 'voir forum et Contact',
 
     }
