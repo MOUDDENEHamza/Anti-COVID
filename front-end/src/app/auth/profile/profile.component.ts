@@ -134,6 +134,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
   }
 
   onLogOut() : void {
+    this.data.changeMessage(0);
     this.router.navigateByUrl('auth/sign-in');
   }
 
@@ -145,6 +146,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
       }
     );
     this.dialog.open(SuccessDeleteAccountComponent);
+    this.data.changeMessage(0);
     this.router.navigateByUrl('auth/sign-in');
   }
 
