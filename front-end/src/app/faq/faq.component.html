@@ -1,1 +1,74 @@
-<p>faq works!</p>
+<div class="wrapper">
+    <div class="container">
+        <h1>{{ this.title }}</h1>
+
+    
+        <h2>
+            Frequently Asked Questions : <br> Looking for infomations ? We may have the answers here !
+        </h2>
+
+
+        <mat-card class="container2" >
+        <br>
+
+        <div class="select"> Please choose a category : </div>
+        <br><br>
+
+        <div class="select"> <form [formGroup]="coordinatesForm">
+            <mat-form-field appearance="fill">
+
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category" required>
+                <mat-option *ngFor="let category of categoryList" [value]="category">
+                    {{category.name}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <br>
+        </form>
+        </div>
+
+        <br><br>
+        
+        <div class="select">
+        <button mat-raised-button color="primary" [disabled]="this.coordinatesForm.invalid" (click)="this.onSubmit()">
+            <mat-icon aria-hidden="false" aria-label="Example search icon">search</mat-icon>
+            Search
+        </button>
+        </div>
+        <br><br>
+    </mat-card>
+
+    <div *ngIf="!this.hideForm()">      
+        <br><br>
+            <h3>{{ this.nameInformations }}</h3>
+            <div class="center" *ngIf="this.nameInformations === 'About this website'">
+                    <app-about-website></app-about-website>
+                    <br>
+            </div>
+            <div class="center" *ngIf="this.nameInformations === 'Covid Informations'">
+                    <app-about-covid></app-about-covid>
+                    <br>
+            </div>
+            <div class="center" *ngIf="this.nameInformations === 'Vaccines Informations'">
+                    <app-about-vaccine></app-about-vaccine>
+                    <br>
+            </div>
+            <div class="center" *ngIf="this.nameInformations === 'Others'">
+                    <app-others></app-others>
+                    <br>
+            </div>
+
+
+
+        </div>
+
+
+        <br><br>
+        <br><br>
+        <br><br>
+
+    </div>
+
+</div>

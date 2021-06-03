@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AboutWebsiteComponent } from './about-website/about-website.component';
+import { CATEGORY } from './category-lists';
 
 @Component({
   selector: 'app-faq',
@@ -7,9 +10,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqComponent implements OnInit {
 
+  title = 'FAQ';
+
+  hide = true;
+  coordinatesForm: FormGroup;
+  categoryList = CATEGORY;
+  nameInformations : any;
+  component = AboutWebsiteComponent;
+
+
   constructor() { }
 
   ngOnInit(): void {
+    this.coordinatesForm = new FormGroup({
+      category: new FormControl('', [Validators.required]),
+    });
+  }
+
+  onSubmit(): void {
+    this.nameInformations = this.coordinatesForm.get('category').value.name;
+    this.hide = false;
+  }
+
+  hideForm(): boolean {
+    return this.hide;
   }
 
 }

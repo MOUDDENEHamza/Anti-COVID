@@ -349,7 +349,7 @@ public class Facade {
 	public Response updateTestCenter() {
 		try {
 			List<List<String>> records = CSVUtility.parseCSVTestFile();
-			for (int i = 0; i < records.size(); i++) {
+			for (int i = 1; i < records.size(); i++) {
 				TestCenter tc = new TestCenter();
 				tc.setName(records.get(i).get(0));
 				tc.setLocalisation(records.get(i).get(1));
@@ -370,7 +370,7 @@ public class Facade {
 		} catch (IOException e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ERROR : Something wrong happend\n").build();
 		}
-		return Response.status(Response.Status.OK).entity("Database initialized with success").build();
+		return Response.status(Response.Status.OK).entity("Database initialized with success\n").build();
 	}
 	
 	/**
@@ -382,10 +382,49 @@ public class Facade {
 	@Path("/test_center")
 	@Produces({"application/json"})
 	public Response getTestCenter() {
-		Query query = em.createQuery("FROM VaccinationCenter", VaccinationCenter.class);
+		Query query = em.createQuery("FROM TestCenter", TestCenter.class);
 		List<TestCenter> list = query.getResultList();
 		return Response.status(Response.Status.OK).entity(list).build();
-		
+	}
+	
+	/**
+	 * Get TestCenters data
+	 * @return a collection of VaccinationCenter
+	 */
+	@SuppressWarnings("unchecked")
+	@GET
+	@Path("/test_center/{zipCode}")
+	@Produces({"application/json"})
+	public Response getTestCenterByzipCode(@PathParam("zipCode") String zipCode) {
+		Query query = em.createQuery("FROM TestCenter", TestCenter.class);
+		List<TestCenter> list = query.getResultList();
+		List<TestCenter> result = new ArrayList<>();
+		for (int i = 0; i < 1000 ; i++ ) {
+			if (zipCode.length() == 4) {
+				zipCode = "0" + zipCode;
+			}
+			for (TestCenter tc : list) {
+				if (tc.getLocalisation() != null && tc.getLocalisation().contains(zipCode)) {
+					result.add(tc);
+				}
+			}
+			zipCode = String.valueOf(Float.valueOf(zipCode).intValue() + 1);
+		}
+		return Response.status(Response.Status.OK).entity(result).build();
+	}
+	
+	/**
+	 * Delete all the screening center from database
+	 * @return OK reponse if the table has been deleted with success
+	 */
+	@DELETE
+	@Path("/delete_screening_center_list")
+	public Response deleteScreeningCenterList() {
+		Collection<TestCenter> l = em.createQuery("FROM TestCenter", TestCenter.class).getResultList();
+		for (TestCenter c : l) {
+			em.remove(c);
+		}
+		return Response.status(Response.Status.OK).entity("Database deleted with success\n").build();
 	}
 	/*************************************************************************/
 	/*************************************************************************/

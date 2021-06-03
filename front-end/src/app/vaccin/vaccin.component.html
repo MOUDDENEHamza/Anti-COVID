@@ -1,90 +1,10 @@
-<div class="splash-screen" *ngIf="false">
-    Loading
-    <span class="d">.</span>
-    <span class="d d-2">.</span>
-    <span class="d d-3">.</span>
-</div>
-
 <div class="wrapper">
-    <h1>{{ this.title }}</h1>
-
-    <mat-card class="container" *ngIf="this.hideForm()">
-        
-        <form [formGroup]="coordinatesForm">
-            <mat-form-field appearance="fill">
-                <mat-label>Region</mat-label>
-                <mat-select formControlName="region" required>
-                <mat-option *ngFor="let region of regionList" [value]="region">
-                    {{region.name}}
-                </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <br>
-            <mat-form-field appearance="fill">
-                <mat-label>Department</mat-label>
-
-                <mat-select formControlName="department" required>
-                <mat-option *ngFor="let department of this.coordinatesForm.get('region').value.departments" [value]="department">
-                    {{department}}
-                </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <br>
-        </form>
-
-        <br><br>
-        
-        <button mat-raised-button color="primary" [disabled]="this.coordinatesForm.invalid" (click)="this.onSubmit()">
-            <mat-icon aria-hidden="false" aria-label="Example search icon">search</mat-icon>
-            Search
-        </button>
-        <br><br>
-    </mat-card>
-    
-    
-    <div  *ngIf="!this.hideForm()">
-
-        <div class="filter">
-            <button mat-raised-button color="accent" (click)="this.onFilter()">
-                <mat-icon aria-hidden="false" aria-label="Example filter_list icon">filter_list</mat-icon>
-                Filter
-            </button>
-        </div>
-        
-        <br><br>
-
-        <mat-grid-list cols="3" rowHeight="1.5:1">
-            <mat-grid-tile *ngFor="let item of this.informations">
-                <div class="center">
-                    <h2>{{ item.name }}</h2>
-                    <mat-divider></mat-divider>
-                    <br>
-                    
-                    <div>
-                        <mat-icon aria-hidden="false" aria-label="Example place icon">place</mat-icon>
-                        <br>    
-                        <div *ngIf="item.address.number !== '' && item.address.street !== ''">
-                            {{ item.address.number }} {{ item.address.street }}<br>
-                        </div>
-                        {{ zeroPad(item.address.zipCode, 5) }} {{ item.address.city }}<br>
-                        {{ item.address.region }}
-                    </div>
-                    
-                    <br>
-
-                    <div *ngIf="item.appointment.phoneNumber !== null && (item.appointment.phoneNumber).length >= 4" >
-                        <mat-icon aria-hidden="false" aria-label="Example phone icon">phone</mat-icon>
-                        <br>
-                        {{ item.appointment.phoneNumber }}
-                    </div>
-                    <br>
-                    
-                    <a mat-raised-button href="{{ item.appointment.webSite }}" target="_blank" color="accent" *ngIf="item.appointment.webSite !== null">
-                        <mat-icon aria-hidden="false" aria-label="Example schedule icon">schedule</mat-icon>
-                        Make an appointement
-                    </a>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list> 
-    </div>
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Vaccine">
+            <app-vaccine-center></app-vaccine-center>
+        </mat-tab>
+        <mat-tab label="Screening">
+            <app-screening-center></app-screening-center>        
+        </mat-tab>
+    </mat-tab-group>
 </div>

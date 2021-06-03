@@ -11,13 +11,16 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { VaccinRoutingModule } from './vaccin-routing.module';
 import { VaccinComponent } from './vaccin.component';
+import { ScreeningCenterComponent } from './screening-center/screening-center.component';
+import { VaccineCenterComponent } from './vaccine-center/vaccine-center.component';
 
 
 @NgModule({
-  declarations: [VaccinComponent],
+  declarations: [VaccinComponent, ScreeningCenterComponent, VaccineCenterComponent],
   imports: [
     CommonModule,
     VaccinRoutingModule,
@@ -30,7 +33,8 @@ import { VaccinComponent } from './vaccin.component';
     MatListModule,
     MatDividerModule,
     MatGridListModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule
   ]
 })
 export class VaccinModule { }

@@ -11,3 +11,4 @@ curl -X POST http://localhost:8080/AntiCOVID/rest/death
 # https://www.data.gouv.fr/en/datasets/lieux-de-vaccination-contre-la-covid-19/
 # https://www.data.gouv.fr/en/datasets/sites-de-prelevements-pour-les-tests-covid/
 curl -X POST http://localhost:8080/AntiCOVID/rest/vaccination_center
+curl -X POST http://localhost:8080/AntiCOVID/rest/test_center

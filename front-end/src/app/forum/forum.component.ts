@@ -26,6 +26,10 @@ export class ForumComponent implements OnInit {
   subscription : Subscription;
   todayISOString : string = new Date().toISOString();
   name : string;
+  monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
   constructor(private addPostService: AddPostService,
               private http: HttpClient,
@@ -62,8 +66,6 @@ export class ForumComponent implements OnInit {
 
   ngOnInit () : void {
     this.postForm = new FormGroup({
-      author: new FormControl('Hamza Mouddene', [Validators.required]),
-      date: new FormControl('May 26, 2021', [Validators.required]),
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required])
     });
@@ -81,9 +83,21 @@ export class ForumComponent implements OnInit {
   }
 
   onPost () : void {
-    this.addPostService.addPost(this.postForm.get('author').value,
-    this.postForm.get('date').value, this.postForm.get('title').value, this.postForm.get('content').value).subscribe();
-    location.reload();
+    let date = new Date();
+    this.addPostService.addPost(this.name, this.monthNames[date.getMonth()] + ' ' + date.getDay() + ', ' + date.getFullYear() ,
+    this.postForm.get('title').value, this.postForm.get('content').value).subscribe();
+    this.ngOnInit();
+    this.http.get('http://localhost:8080/AntiCOVID/rest/get_posts_list', { responseType: "json" }).subscribe(
+        data => {
+          this.posts = data;
+          for (var i = 0; i < this.posts.length; i++) {
+            this.likesColor.push('');
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
   getIndex (id : number) : number {
@@ -104,7 +118,17 @@ export class ForumComponent implements OnInit {
 
   onComment (post) : void {
     this.dialog.open(CommentComponent, {data: post}).afterClosed().subscribe(result => {
-      location.reload();
+      this.http.get('http://localhost:8080/AntiCOVID/rest/get_posts_list', { responseType: "json" }).subscribe(
+        data => {
+          this.posts = data;
+          for (var i = 0; i < this.posts.length; i++) {
+            this.likesColor.push('');
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
     });
   }
 
